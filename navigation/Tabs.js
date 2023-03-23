@@ -3,6 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Home from '../screens/Home';
 import Pengaturan from '../screens/Pengaturan';
 import Jadwal from '../screens/Jadwal';
+import { TouchableOpacity } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,6 +13,14 @@ const AppRoot = () => {
       screenOptions={() => ({
         tabBarActiveTintColor: '#82c24b',
         headerShown: false,
+        tabBarButton: ({ onPress, children }) => (
+          <TouchableOpacity
+            onPress={onPress}
+            style={{ flex: 1 }}
+          >
+            {children}
+          </TouchableOpacity>
+        ),
       })}>
       <Tab.Screen
         name="Home"
