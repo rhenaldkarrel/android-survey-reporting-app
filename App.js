@@ -1,18 +1,14 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { NativeBaseProvider, Box } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { NativeBaseProvider } from "native-base";
 import { AuthProvider } from "./context/AuthContext";
+import AppStack from "./navigation";
+import { theme } from './lib/theme';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AuthProvider>
-        <NativeBaseProvider>
-          <SafeAreaView>
-            <Box>Test</Box>
-          </SafeAreaView>
-        </NativeBaseProvider>
-      </AuthProvider>
-    </NavigationContainer>
+    <AuthProvider>
+      <NativeBaseProvider theme={theme}>
+        <AppStack />
+      </NativeBaseProvider>
+    </AuthProvider>
   );
 }
