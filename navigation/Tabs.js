@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Home from '../screens/Home';
 import Pengaturan from '../screens/Pengaturan';
+import Jadwal from '../screens/Jadwal';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const AppRoot = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Jadwal"
         component={Jadwal}
         options={{
@@ -31,7 +32,7 @@ const AppRoot = () => {
             <Ionicons name="calendar" color={color} size={size} />
           ),
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Pengaturan"
         component={Pengaturan}
