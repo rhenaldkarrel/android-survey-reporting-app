@@ -14,8 +14,6 @@ import { StatusBar } from 'react-native';
 export default function Home() {
   const { auth } = useAuth();
 
-  console.log(auth)
-
   return (
     <ScrollView backgroundColor="primary.400" marginTop={StatusBar.currentHeight}>
       <Box p="16px">
