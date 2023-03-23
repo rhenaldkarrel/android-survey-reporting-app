@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth';
 import Login from '../screens/Login';
 import { NavigationContainer } from '@react-navigation/native';
 import AppRoot from './Tabs';
+import UbahProfile from '../screens/UbahProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export default function AppStack() {
               component={AppRoot}
               options={{headerShown: false}}
             />
+            <Stack.Screen name="Ubah Informasi Akun" component={UbahProfile} />
           </>
         )}
       </Stack.Navigator>
