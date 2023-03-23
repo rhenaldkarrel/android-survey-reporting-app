@@ -1,5 +1,5 @@
 import {createContext, useState, useMemo, useCallback, useEffect} from 'react';
-import { KEY_STORAGE_AUTH } from '../constants';
+import { KEY_STORAGE_AUTH } from '../lib/constants';
 import { useMyAsyncStorage } from '../hooks/useAsycnStorage';
 
 export const authContextDefault = {
