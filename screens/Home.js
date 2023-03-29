@@ -11,7 +11,7 @@ import {
 import useAuth from '../hooks/useAuth';
 import { StatusBar } from 'react-native';
 
-export default function Home() {
+export default function Home({ navigation }) {
   const { auth } = useAuth();
 
   return (
@@ -96,7 +96,7 @@ export default function Home() {
             <Text>14 Maret 2023</Text>
             <Divider my="8px" />
             <HStack display="flex" space="8px">
-              <Button flex={1} variant="outline" borderColor="primary.400">
+              <Button flex={1} variant="outline" borderColor="primary.400" onPress={() => navigation.navigate('Informasi Lokasi Debitur')}>
                 Buka Lokasi
               </Button>
               <Button flex={1} bg="primary.400">
