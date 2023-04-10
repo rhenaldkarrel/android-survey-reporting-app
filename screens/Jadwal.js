@@ -1,8 +1,4 @@
 import {
-  Box,
-  Button,
-  Divider,
-  HStack,
   Heading,
   ScrollView,
   Text,
@@ -16,6 +12,7 @@ import {
   monthNamesShort,
 } from '../lib/constants';
 import { StatusBar } from 'react-native';
+import DebiturCard from '../components/DebiturCard';
 
 LocaleConfig.locales['id'] = {
   monthNames,
@@ -50,22 +47,7 @@ export default function Jadwal() {
         <Heading fontWeight="medium" fontSize="16px">
           Jadwal Hari Ini
         </Heading>
-        <Box bg="primaryShade.800" p="6px" borderRadius="8px">
-          <Heading fontSize="16px" fontWeight="medium">
-            Adrian Sutanto
-          </Heading>
-          <Text>09.00-11.00</Text>
-          <Text>14 Maret 2023</Text>
-          <Divider my="8px" />
-          <HStack display="flex" space="8px">
-            <Button flex={1} variant="outline" borderColor="primary.400">
-              Buka Lokasi
-            </Button>
-            <Button flex={1} bg="primary.400">
-              Laporan Survey
-            </Button>
-          </HStack>
-        </Box>
+        <DebiturCard />
       </VStack>
     </ScrollView>
   );
