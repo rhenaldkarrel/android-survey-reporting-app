@@ -9,33 +9,39 @@ import Map from '../screens/Map';
 const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
-  const { auth } = useAuth();
+	const { auth } = useAuth();
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ 
-        headerStyle: {
-          backgroundColor: '#82c24b',
-        },
-      }}>
-        {!auth.token ? (
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{headerShown: false}}
-          />
-        ) : (
-          <>
-            <Stack.Screen
-              name="MainApp"
-              component={AppRoot}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen name="Ubah Informasi Akun" component={UbahProfile} />
-            <Stack.Screen name="Informasi Lokasi Debitur" component={Map} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer>
+			<Stack.Navigator
+				screenOptions={{
+					headerStyle: {
+						backgroundColor: '#82c24b',
+					},
+				}}
+			>
+				{!auth.token ? (
+					<Stack.Screen
+						name='Login'
+						component={Login}
+						options={{ headerShown: false }}
+					/>
+				) : (
+					<>
+						<Stack.Screen
+							name='MainApp'
+							component={AppRoot}
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen name='Ubah Informasi Akun' component={UbahProfile} />
+						<Stack.Screen
+							name='Informasi Lokasi Debitur'
+							component={Map}
+							options={{ headerShown: false }}
+						/>
+					</>
+				)}
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 }
