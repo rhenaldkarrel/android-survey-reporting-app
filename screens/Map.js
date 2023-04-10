@@ -4,10 +4,17 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { regionFrom } from '../lib/helpers/regionFrom';
 import { Box, Button, Heading, Text, VStack } from 'native-base';
+import { createOpenLink } from 'react-native-open-maps';
 
 export default function Map({ navigation }) {
 	const coordinates = regionFrom(-6.129759815614638, 106.9556811104887, 2);
 	const coordinates2 = regionFrom(-6.11934474821684, 106.956970205967, 2);
+
+	const openGoogleMapsNavigation = createOpenLink({
+		start: `${coordinates.latitude}, ${coordinates.longitude}`,
+		end: 'SMPN 244 Jakarta',
+		provider: 'google',
+	});
 
 	return (
 		<View style={styles.container}>
@@ -61,7 +68,9 @@ export default function Map({ navigation }) {
 						</Text>
 					</Box>
 					<Box>
-						<Button bg='primary.400'>Buka Navigasi di Map</Button>
+						<Button bg='primary.400' onPress={openGoogleMapsNavigation}>
+							Buka Navigasi di Map
+						</Button>
 					</Box>
 				</VStack>
 			</Box>
