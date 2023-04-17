@@ -19,7 +19,7 @@ export default function Survei() {
 	React.useEffect(() => {
 		(async () => {
 			try {
-				const res = await axios.get(`/debitur?surveyor=${auth.userId}`);
+				const res = await axios.get(`/debitur/form-pengajuan/has-surveyor/${auth.userId}`);
 
 				setFormPengajuanData(res.data.data);
 			} catch (err) {
