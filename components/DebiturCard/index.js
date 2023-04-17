@@ -3,35 +3,19 @@ import { Box, Heading, Text, Divider, HStack, Button } from 'native-base';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { STATUS_SURVEI } from '../../lib/constants';
 import { TouchableOpacity } from 'react-native';
+import { Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const DebiturCard = ({ status = STATUS_SURVEI.selesai_survei }) => {
+const DebiturCard = ({ formPengajuanData }) => {
+	const navigation = useNavigation();
+
+	const { alamat, rt, rw, kelurahan, kecamatan, kota, kode_pos } =
+		formPengajuanData.alamat_domisili;
+
+	const { koordinat_lokasi } = formPengajuanData.alamat_domisili;
+
 	const RenderButtons = () => {
-		switch (status) {
-			case STATUS_SURVEI.diajukan:
-				return (
-					<Button leftIcon={<MaterialIcons name='person' color='#fff' />} flex={1} borderColor='primary.400'>
-						Ajukan Diri untuk Survei
-					</Button>
-				);
-			case STATUS_SURVEI.menunggu_tanggal:
-				return (
-					<React.Fragment>
-						<Button
-							leftIcon={<MaterialIcons name='chat' color='#82c24b' />}
-							flex={1}
-							variant='outline'
-							borderColor='primary.400'
-						>
-							Chat
-						</Button>
-						<Button
-							leftIcon={<MaterialIcons name='date-range' color='#fff' />}
-							flex={1}
-						>
-							Pilih Waktu & Tanggal
-						</Button>
-					</React.Fragment>
-				);
+		switch (formPengajuanData.status) {
 			case STATUS_SURVEI.siap_survei:
 				return (
 					<React.Fragment>
@@ -40,12 +24,22 @@ const DebiturCard = ({ status = STATUS_SURVEI.selesai_survei }) => {
 							flex={1}
 							variant='outline'
 							borderColor='primary.400'
+							onPress={() =>
+								Linking.openURL(
+									`https://wa.me/${formPengajuanData.no_whatsapp}`
+								)
+							}
 						>
 							Chat
 						</Button>
 						<Button
 							leftIcon={<MaterialIcons name='location-pin' color='#82c24b' />}
 							flex={1}
+							onPress={() =>
+								navigation.navigate('Informasi Lokasi Debitur', {
+									koordinat_lokasi,
+								})
+							}
 							variant='outline'
 							borderColor='primary.400'
 						>
@@ -79,11 +73,9 @@ const DebiturCard = ({ status = STATUS_SURVEI.selesai_survei }) => {
 			<HStack display='flex' justifyContent='space-between'>
 				<Box maxWidth='70%'>
 					<Heading fontSize='16px' fontWeight='medium'>
-						Adrian
+						{formPengajuanData.nama_lengkap}
 					</Heading>
-					<Text>Jalan Ke Arah Rumah Saya No. 1, Babelan, Bekasi</Text>
-					<Text>09.00-11.00</Text>
-					<Text>14 Maret 2023</Text>
+					<Text>{`${alamat}, RT/RW ${rt}/${rw}, ${kelurahan}, ${kecamatan}, ${kota} ${kode_pos}`}</Text>
 				</Box>
 				<TouchableOpacity>
 					<MaterialIcons

@@ -7,7 +7,15 @@ import { Box, Button, Heading, Text, VStack } from 'native-base';
 import { createOpenLink } from 'react-native-open-maps';
 import * as Location from 'expo-location';
 
-export default function Map({ navigation }) {
+export default function Map({ navigation, route }) {
+	const { koordinat_lokasi } = route.params;
+	const debiturLocation = regionFrom(
+		koordinat_lokasi.latitude,
+		koordinat_lokasi.longitude,
+		2
+	);
+
+	const map = React.useRef();
 	const [myLocation, setMyLocation] = React.useState({
 		latitude: 0,
 		longitude: 0,
@@ -15,8 +23,6 @@ export default function Map({ navigation }) {
 		longitudeDelta: 2,
 	});
 	const [message, setMessage] = React.useState('');
-	const map = React.useRef();
-	const coordinates2 = regionFrom(-6.11934474821684, 106.956970205967, 2);
 
 	const isLocationEmpty =
 		myLocation.latitude === 0 || myLocation.longitude === 0;
@@ -37,7 +43,7 @@ export default function Map({ navigation }) {
 				} = location;
 
 				const myLocation = regionFrom(latitude, longitude, 2);
-				const allCoords = [myLocation, coordinates2];
+				const allCoords = [myLocation, debiturLocation];
 
 				setMyLocation(myLocation);
 				map.current.fitToCoordinates(allCoords, {
@@ -68,7 +74,7 @@ export default function Map({ navigation }) {
 				followsUserLocation={true}
 			>
 				<Marker
-					coordinate={coordinates2}
+					coordinate={debiturLocation}
 					title='title'
 					description='description'
 				/>
