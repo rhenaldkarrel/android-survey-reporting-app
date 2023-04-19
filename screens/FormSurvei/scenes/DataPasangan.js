@@ -58,6 +58,7 @@ export default function DataPasangan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+                keyboardType='numeric'
 							/>
 						)}
 						name='no_ktp'
@@ -128,6 +129,7 @@ export default function DataPasangan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -143,6 +145,7 @@ export default function DataPasangan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -158,6 +161,7 @@ export default function DataPasangan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -223,6 +227,7 @@ export default function DataPasangan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+                keyboardType='phone-pad'
 							/>
 						)}
 						name='no_hp'
@@ -239,6 +244,7 @@ export default function DataPasangan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+                keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
