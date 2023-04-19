@@ -58,6 +58,7 @@ export default function DataPenjamin({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+								keyboardType='numeric'
 							/>
 						)}
 						name='no_ktp'
@@ -96,6 +97,7 @@ export default function DataPenjamin({ debiturId }) {
 									onChangeText={(val) => onChange(val)}
 									value={value}
 									placeholder='Alamat'
+									keyboardType='numeric'
 								/>
 							)}
 							name='alamat'
@@ -111,6 +113,7 @@ export default function DataPenjamin({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -141,6 +144,7 @@ export default function DataPenjamin({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -206,6 +210,7 @@ export default function DataPenjamin({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_hp'
@@ -222,6 +227,7 @@ export default function DataPenjamin({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
