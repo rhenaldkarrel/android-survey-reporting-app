@@ -1,4 +1,5 @@
 import resource from '../api';
+import { authContextDefault } from '../context/AuthContext';
 import useAuth from './useAuth';
 import useRefreshToken from './useRefreshToken';
 import { useEffect } from 'react';
@@ -33,7 +34,7 @@ const useAxiosPrivate = () => {
 						return resource(prevRequest);
 					}
 				} else if (error?.response?.status === 401 && !didCancel) {
-					setAuth({});
+					setAuth(authContextDefault);
 					ToastAndroid.show(
 						'Sesi sudah berakhir, harap lakukan login kembali.'
 					);
