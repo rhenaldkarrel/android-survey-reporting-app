@@ -1,6 +1,6 @@
-import { ScrollView } from 'native-base';
+import { ScrollView, Text, View } from 'native-base';
 import { useState } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { ActivityIndicator, TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
 import { TabBar, TabView } from 'react-native-tab-view';
 import DataPemohon from './scenes/DataPemohon';
 import DataPasangan from './scenes/DataPasangan';
@@ -38,6 +38,13 @@ const renderScene = ({ route }) => {
 	}
 };
 
+const LazyPlaceholder = ({ route }) => (
+  <View flex={1} alignItems="center" justifyContent="center">
+    <ActivityIndicator />
+    <Text>Memuat {route.title}…</Text>
+  </View>
+);
+
 export default function FormSurvei({ route }) {
 	const { _id } = route.params;
 	const layout = useWindowDimensions();
@@ -58,6 +65,8 @@ export default function FormSurvei({ route }) {
 
 	return (
 		<TabView
+      lazy
+      renderLazyPlaceholder={LazyPlaceholder}
 			navigationState={{ index, routes }}
 			renderScene={renderScene}
 			onIndexChange={setIndex}
