@@ -95,6 +95,7 @@ export default function DataKerabat({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -110,6 +111,7 @@ export default function DataKerabat({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -125,6 +127,7 @@ export default function DataKerabat({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -190,6 +193,7 @@ export default function DataKerabat({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+                keyboardType='phone-pad'
 							/>
 						)}
 						name='no_hp'
@@ -206,6 +210,7 @@ export default function DataKerabat({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+                keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
