@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppRoot from './Tabs';
 import UbahProfile from '../screens/UbahProfile';
 import Map from '../screens/Map';
+import FormSurvei from '../screens/FormSurvei';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,13 @@ export default function AppStack() {
 							name='Informasi Lokasi Debitur'
 							component={Map}
 							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name='FormSurvei'
+							options={{
+								title: 'Pengisian Form Survei',
+							}}
+							component={FormSurvei}
 						/>
 					</>
 				)}

@@ -9,9 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 const DebiturCard = ({ formPengajuanData }) => {
 	const navigation = useNavigation();
 
+	const { _id } = formPengajuanData;
 	const { alamat, rt, rw, kelurahan, kecamatan, kota, kode_pos } =
 		formPengajuanData.alamat_domisili;
-
 	const { koordinat_lokasi } = formPengajuanData.alamat_domisili;
 
 	const RenderButtons = () => {
@@ -49,6 +49,11 @@ const DebiturCard = ({ formPengajuanData }) => {
 							leftIcon={<MaterialIcons name='description' color='#fff' />}
 							flex={1}
 							borderColor='primary.400'
+							onPress={() =>
+								navigation.navigate('FormSurvei', {
+									_id,
+								})
+							}
 						>
 							Form Survei
 						</Button>
