@@ -77,7 +77,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 								Laporan Kumite
 							</Button>
 							<Button
-								leftIcon={<MaterialIcons name='description' color='#fff' />}
+								leftIcon={<MaterialIcons name='photo' color='#fff' />}
 								flex={1}
 								borderColor='primary.400'
 								onPress={() =>
