@@ -1,5 +1,13 @@
 import React from 'react';
-import { Box, Heading, Text, Divider, HStack, Button } from 'native-base';
+import {
+	Box,
+	Heading,
+	Text,
+	Divider,
+	HStack,
+	Button,
+	VStack,
+} from 'native-base';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { STATUS_SURVEI } from '../../lib/constants';
 import { TouchableOpacity } from 'react-native';
@@ -18,46 +26,70 @@ const DebiturCard = ({ formPengajuanData }) => {
 		switch (formPengajuanData.status) {
 			case STATUS_SURVEI.siap_survei:
 				return (
-					<React.Fragment>
-						<Button
-							leftIcon={<MaterialIcons name='chat' color='#82c24b' />}
-							flex={1}
-							variant='outline'
-							borderColor='primary.400'
-							onPress={() =>
-								Linking.openURL(
-									`https://wa.me/${formPengajuanData.no_whatsapp}`
-								)
-							}
-						>
-							Chat
-						</Button>
-						<Button
-							leftIcon={<MaterialIcons name='location-pin' color='#82c24b' />}
-							flex={1}
-							onPress={() =>
-								navigation.navigate('Informasi Lokasi Debitur', {
-									koordinat_lokasi,
-								})
-							}
-							variant='outline'
-							borderColor='primary.400'
-						>
-							Lokasi
-						</Button>
-						<Button
-							leftIcon={<MaterialIcons name='description' color='#fff' />}
-							flex={1}
-							borderColor='primary.400'
-							onPress={() =>
-								navigation.navigate('FormSurvei', {
-									_id,
-								})
-							}
-						>
-							Form Survei
-						</Button>
-					</React.Fragment>
+					<VStack space='8px'>
+						<HStack space='8px'>
+							<Button
+								variant='outline'
+								borderColor='primary.400'
+								onPress={() =>
+									Linking.openURL(
+										`https://wa.me/${formPengajuanData.no_whatsapp}`
+									)
+								}
+							>
+								<MaterialIcons name='chat' color='#82c24b' />
+							</Button>
+							<Button
+								onPress={() =>
+									navigation.navigate('Informasi Lokasi Debitur', {
+										koordinat_lokasi,
+									})
+								}
+								variant='outline'
+								borderColor='primary.400'
+							>
+								<MaterialIcons name='location-pin' color='#82c24b' />
+							</Button>
+							<Button
+								leftIcon={<MaterialIcons name='description' color='#fff' />}
+								flex={1}
+								borderColor='primary.400'
+								onPress={() =>
+									navigation.navigate('FormSurvei', {
+										_id,
+									})
+								}
+							>
+								Form Survei
+							</Button>
+						</HStack>
+						<HStack space='8px'>
+							<Button
+								leftIcon={<MaterialIcons name='description' color='#fff' />}
+								flex={1}
+								borderColor='primary.400'
+								onPress={() =>
+									navigation.navigate('FormSurvei', {
+										_id,
+									})
+								}
+							>
+								Laporan Kumite
+							</Button>
+							<Button
+								leftIcon={<MaterialIcons name='description' color='#fff' />}
+								flex={1}
+								borderColor='primary.400'
+								onPress={() =>
+									navigation.navigate('FormSurvei', {
+										_id,
+									})
+								}
+							>
+								Bukti Dokumen
+							</Button>
+						</HStack>
+					</VStack>
 				);
 			case STATUS_SURVEI.selesai_survei:
 				return (
@@ -91,9 +123,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 				</TouchableOpacity>
 			</HStack>
 			<Divider my='8px' />
-			<HStack display='flex' space='8px'>
-				{RenderButtons()}
-			</HStack>
+			{RenderButtons()}
 		</Box>
 	);
 };
