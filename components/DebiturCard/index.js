@@ -81,7 +81,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 								flex={1}
 								borderColor='primary.400'
 								onPress={() =>
-									navigation.navigate('FormSurvei', {
+									navigation.navigate('BuktiDokumen', {
 										_id,
 									})
 								}

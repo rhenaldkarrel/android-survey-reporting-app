@@ -6,6 +6,7 @@ import AppRoot from './Tabs';
 import UbahProfile from '../screens/UbahProfile';
 import Map from '../screens/Map';
 import FormSurvei from '../screens/FormSurvei';
+import BuktiDokumen from '../screens/BuktiDokumen';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,13 @@ export default function AppStack() {
 								title: 'Pengisian Form Survei',
 							}}
 							component={FormSurvei}
+						/>
+						<Stack.Screen
+							name='BuktiDokumen'
+							options={{
+								title: 'Bukti Dokumen',
+							}}
+							component={BuktiDokumen}
 						/>
 					</>
 				)}
