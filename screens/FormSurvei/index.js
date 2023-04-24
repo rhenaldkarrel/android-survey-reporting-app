@@ -4,6 +4,14 @@ import { ActivityIndicator, TouchableWithoutFeedback, useWindowDimensions } from
 import { TabBar, TabView } from 'react-native-tab-view';
 import DataPemohon from './scenes/DataPemohon';
 import DataPasangan from './scenes/DataPasangan';
+import DataPenjamin from './scenes/DataPenjamin';
+import DataKerabat from './scenes/DataKerabat';
+import DataPekerjaan from './scenes/DataPekerjaan';
+import DataAsuransi from './scenes/DataAsuransi';
+import DataPenjual from './scenes/DataPenjual';
+import InformasiKendaraan from './scenes/InformasiKendaraan';
+import DataPenghasilan from './scenes/DataPenghasilan';
+import StrukturPembiayaan from './scenes/StrukturPembiayaan';
 
 const SecondRoute = () => (
 	<ScrollView style={{ flex: 1, backgroundColor: '#673ab7' }} />
@@ -18,21 +26,21 @@ const renderScene = ({ route }) => {
 		case 'dataPasangan':
 			return <DataPasangan debiturId={debiturId} />;
 		case 'dataPenjamin':
-			return <SecondRoute debiturId={debiturId} />;
+			return <DataPenjamin debiturId={debiturId} />;
 		case 'dataKerabat':
-			return <SecondRoute debiturId={debiturId} />;
+			return <DataKerabat debiturId={debiturId} />;
 		case 'dataPekerjaan':
-			return <SecondRoute debiturId={debiturId} />;
+			return <DataPekerjaan debiturId={debiturId} />;
 		case 'informasiKendaraan':
-			return <SecondRoute debiturId={debiturId} />;
+			return <InformasiKendaraan debiturId={debiturId} />;
 		case 'dataPenghasilan':
-			return <SecondRoute debiturId={debiturId} />;
+			return <DataPenghasilan debiturId={debiturId} />;
 		case 'dataAsuransi':
-			return <SecondRoute debiturId={debiturId} />;
+			return <DataAsuransi debiturId={debiturId} />;
 		case 'strukturPembiayaan':
-			return <SecondRoute debiturId={debiturId} />;
+			return <StrukturPembiayaan debiturId={debiturId} />;
 		case 'dataPenjual':
-			return <SecondRoute debiturId={debiturId} />;
+			return <DataPenjual debiturId={debiturId} />;
 		default:
 			return null;
 	}
