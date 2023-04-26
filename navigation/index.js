@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppRoot from './Tabs';
 import UbahProfile from '../screens/UbahProfile';
 import Map from '../screens/Map';
-import FormSurvei from '../screens/FormSurvei';
+import FormPermohonan from '../screens/FormPermohonan';
 import BuktiDokumen from '../screens/BuktiDokumen';
 
 const Stack = createNativeStackNavigator();
@@ -42,11 +42,11 @@ export default function AppStack() {
 							options={{ headerShown: false }}
 						/>
 						<Stack.Screen
-							name='FormSurvei'
+							name='FormPermohonan'
 							options={{
-								title: 'Pengisian Form Survei',
+								title: 'Pengisian Form Permohonan',
 							}}
-							component={FormSurvei}
+							component={FormPermohonan}
 						/>
 						<Stack.Screen
 							name='BuktiDokumen'
