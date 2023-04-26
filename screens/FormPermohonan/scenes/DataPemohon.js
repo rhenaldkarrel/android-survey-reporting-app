@@ -1,23 +1,30 @@
+import _ from 'lodash';
 import {
 	Button,
-	Checkbox,
 	FormControl,
 	HStack,
 	Input,
 	ScrollView,
 	Select,
-	Text,
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
-import { useGetDataPemohon } from '../../../api/form-permohonan';
+import { ToastAndroid } from 'react-native';
+import {
+	useGetDataPemohon,
+	usePostDataPemohon,
+} from '../../../api/form-permohonan';
+import { useState } from 'react';
 
 export default function DataPemohon({ debiturId, formPermohonanId }) {
+	const [isLoading, setIsLoading] = useState(false);
+
 	const { dataPemohon } = useGetDataPemohon(formPermohonanId);
+	const postDataPemohon = usePostDataPemohon(formPermohonanId);
 
 	const {
 		control,
-		handleSubmit,
+		getValues,
 		formState: { errors },
 		watch,
 	} = useForm({
@@ -32,19 +39,19 @@ export default function DataPemohon({ debiturId, formPermohonanId }) {
 			jumlah_tanggungan: dataPemohon.jumlah_tanggungan?.toString(),
 			pendidikan_terakhir: dataPemohon.pendidikan_terakhir,
 			jenis_kelamin: dataPemohon.jenis_kelamin,
-			alamat_ktp: dataPemohon.alamat_ktp.alamat,
-			alamat_ktp_rt: dataPemohon.alamat_ktp.rt,
-			alamat_ktp_rw: dataPemohon.alamat_ktp.rw,
-			alamat_ktp_kota: dataPemohon.alamat_ktp.kota,
-			alamat_ktp_kelurahan: dataPemohon.alamat_ktp.kelurahan,
-			alamat_ktp_kecamatan: dataPemohon.alamat_ktp.kecamatan,
+			alamat_ktp: dataPemohon.alamat_ktp?.alamat,
+			alamat_ktp_rt: dataPemohon.alamat_ktp?.rt,
+			alamat_ktp_rw: dataPemohon.alamat_ktp?.rw,
+			alamat_ktp_kota: dataPemohon.alamat_ktp?.kota,
+			alamat_ktp_kelurahan: dataPemohon.alamat_ktp?.kelurahan,
+			alamat_ktp_kecamatan: dataPemohon.alamat_ktp?.kecamatan,
 			alamat_ktp_kode_pos: dataPemohon.alamat_ktp?.kode_pos?.toString(),
-			alamat_domisili: dataPemohon.alamat_domisili.alamat,
-			alamat_domisili_rt: dataPemohon.alamat_domisili.rt,
-			alamat_domisili_rw: dataPemohon.alamat_domisili.rw,
-			alamat_domisili_kota: dataPemohon.alamat_domisili.kota,
-			alamat_domisili_kelurahan: dataPemohon.alamat_domisili.kelurahan,
-			alamat_domisili_kecamatan: dataPemohon.alamat_domisili.kecamatan,
+			alamat_domisili: dataPemohon.alamat_domisili?.alamat,
+			alamat_domisili_rt: dataPemohon.alamat_domisili?.rt,
+			alamat_domisili_rw: dataPemohon.alamat_domisili?.rw,
+			alamat_domisili_kota: dataPemohon.alamat_domisili?.kota,
+			alamat_domisili_kelurahan: dataPemohon.alamat_domisili?.kelurahan,
+			alamat_domisili_kecamatan: dataPemohon.alamat_domisili?.kecamatan,
 			alamat_domisili_kode_pos:
 				dataPemohon.alamat_domisili?.kode_pos?.toString(),
 			status_rumah: dataPemohon.status_rumah,
@@ -62,6 +69,69 @@ export default function DataPemohon({ debiturId, formPermohonanId }) {
 			no_npwp: dataPemohon.no_npwp,
 		},
 	});
+
+	const onSubmit = async () => {
+		setIsLoading(true);
+
+		ToastAndroid.show('Mohon tunggu sebentar...', ToastAndroid.SHORT);
+
+		const data = getValues();
+
+		const formattedData = {
+			...data,
+			alamat_ktp: {
+				alamat: data.alamat_ktp,
+				rt: data.alamat_ktp_rt,
+				rw: data.alamat_ktp_rw,
+				kecamatan: data.alamat_ktp_kecamatan,
+				kelurahan: data.alamat_ktp_kelurahan,
+				kode_pos: Number(data.alamat_ktp_kode_pos),
+				kota: data.alamat_ktp_kota,
+			},
+			alamat_domisili: {
+				alamat: data.alamat_domisili,
+				rt: data.alamat_domisili_rt,
+				rw: data.alamat_domisili_rw,
+				kecamatan: data.alamat_domisili_kecamatan,
+				kelurahan: data.alamat_domisili_kelurahan,
+				kode_pos: Number(data.alamat_domisili_kode_pos),
+				kota: data.alamat_domisili_kota,
+			},
+			jumlah_tanggungan: Number(data.jumlah_tanggungan),
+		};
+
+		const cleanedData = _.omit(formattedData, [
+			'alamat_ktp_rt',
+			'alamat_ktp_rw',
+			'alamat_ktp_kecamatan',
+			'alamat_ktp_kelurahan',
+			'alamat_ktp_kode_pos',
+			'alamat_ktp_kota',
+			'alamat_domisili_rt',
+			'alamat_domisili_rw',
+			'alamat_domisili_kecamatan',
+			'alamat_domisili_kelurahan',
+			'alamat_domisili_kode_pos',
+			'alamat_domisili_kota',
+		]);
+
+		try {
+			const response = await postDataPemohon(cleanedData);
+
+			if (response.success) {
+				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+			} else {
+				throw new Error('Terjadi kesalahan ketika menyimpan data!');
+			}
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<ScrollView
@@ -516,21 +586,6 @@ export default function DataPemohon({ debiturId, formPermohonanId }) {
 					/>
 				</FormControl>
 				<FormControl>
-					<Controller
-						control={control}
-						name='no_hp_is_no_whatsapp'
-						defaultValue={false}
-						rules={{ required: true }}
-						render={({ field: { onChange, value } }) => (
-							<Checkbox isChecked={value} onPress={() => onChange(!value)}>
-								<Text fontSize={12} color='gray.500'>
-									Nomor sama dengan Whatsapp
-								</Text>
-							</Checkbox>
-						)}
-					/>
-				</FormControl>
-				<FormControl>
 					<FormControl.Label>No. Whatsapp</FormControl.Label>
 					<Controller
 						control={control}
@@ -699,7 +754,9 @@ export default function DataPemohon({ debiturId, formPermohonanId }) {
 						shouldUnregister={true}
 					/>
 				</FormControl>
-				<Button bgColor='primary.400'>Simpan Data</Button>
+				<Button bgColor='primary.400' onPress={onSubmit} isLoading={isLoading}>
+					Simpan Data
+				</Button>
 			</VStack>
 		</ScrollView>
 	);

@@ -19,3 +19,18 @@ export const useGetDataPemohon = (formPermohonanId) => {
 
 	return { dataPemohon };
 };
+
+export const usePostDataPemohon = (formPermohonanId) => {
+	const axios = useAxiosPrivate();
+
+	const postDataPemohon = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-pemohon/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	return postDataPemohon;
+};
