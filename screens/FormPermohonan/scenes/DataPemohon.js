@@ -10,19 +10,56 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useGetDataPemohon } from '../../../api/form-permohonan';
 
-export default function DataPemohon({ debiturId }) {
+export default function DataPemohon({ debiturId, formPermohonanId }) {
+	const { dataPemohon } = useGetDataPemohon(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			nama_lengkap: dataPemohon.nama_lengkap,
+			no_ktp: dataPemohon.no_ktp,
+			tempat_tanggal_lahir: dataPemohon.tempat_tanggal_lahir,
+			agama: dataPemohon.agama,
+			hobi: dataPemohon.hobi,
+			nama_ibu_kandung: dataPemohon.nama_ibu_kandung,
+			status_pernikahan: dataPemohon.status_pernikahan,
+			jumlah_tanggungan: dataPemohon.jumlah_tanggungan?.toString(),
+			pendidikan_terakhir: dataPemohon.pendidikan_terakhir,
+			jenis_kelamin: dataPemohon.jenis_kelamin,
+			alamat_ktp: dataPemohon.alamat_ktp.alamat,
+			alamat_ktp_rt: dataPemohon.alamat_ktp.rt,
+			alamat_ktp_rw: dataPemohon.alamat_ktp.rw,
+			alamat_ktp_kota: dataPemohon.alamat_ktp.kota,
+			alamat_ktp_kelurahan: dataPemohon.alamat_ktp.kelurahan,
+			alamat_ktp_kecamatan: dataPemohon.alamat_ktp.kecamatan,
+			alamat_ktp_kode_pos: dataPemohon.alamat_ktp?.kode_pos?.toString(),
+			alamat_domisili: dataPemohon.alamat_domisili.alamat,
+			alamat_domisili_rt: dataPemohon.alamat_domisili.rt,
+			alamat_domisili_rw: dataPemohon.alamat_domisili.rw,
+			alamat_domisili_kota: dataPemohon.alamat_domisili.kota,
+			alamat_domisili_kelurahan: dataPemohon.alamat_domisili.kelurahan,
+			alamat_domisili_kecamatan: dataPemohon.alamat_domisili.kecamatan,
+			alamat_domisili_kode_pos:
+				dataPemohon.alamat_domisili?.kode_pos?.toString(),
+			status_rumah: dataPemohon.status_rumah,
+			lama_tinggal: dataPemohon.lama_tinggal,
+			no_hp: dataPemohon.no_hp,
+			no_whatsapp: dataPemohon.no_whatsapp,
+			no_telp: dataPemohon.no_telp,
+			no_fax: dataPemohon.no_fax,
+			email: dataPemohon.email,
+			kewarganegaraan: dataPemohon.kewarganegaraan,
+			tujuan_pembiayaan: dataPemohon.tujuan_pembiayaan,
+			nama_bank: dataPemohon.nama_bank,
+			rekening_atas_nama: dataPemohon.rekening_atas_nama,
+			tujuan_pengadaan_barang_jasa: dataPemohon.tujuan_pengadaan_barang_jasa,
+			no_npwp: dataPemohon.no_npwp,
 		},
 	});
 
@@ -43,7 +80,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='nama_lengkap'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -56,11 +92,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='numeric'
+								keyboardType='numeric'
 							/>
 						)}
 						name='no_ktp'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -77,7 +112,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='tempat_tanggal_lahir'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -92,15 +126,14 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Islam' value='islam' />
-								<Select.Item label='Protestan' value='protestan' />
-								<Select.Item label='Katolik' value='katolik' />
-								<Select.Item label='Hindu' value='hindu' />
-								<Select.Item label='Buddha' value='buddha' />
+								<Select.Item label='Islam' value='Islam' />
+								<Select.Item label='Protestan' value='Protestan' />
+								<Select.Item label='Katolik' value='Katolik' />
+								<Select.Item label='Hindu' value='Hindu' />
+								<Select.Item label='Buddha' value='Buddha' />
 							</Select>
 						)}
 						name='agama'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -116,7 +149,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='hobi'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -132,7 +164,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='nama_ibu_kandung'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -147,13 +178,12 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Belum Kawin' value='belum_kawin' />
-								<Select.Item label='Kawin' value='kawin' />
-								<Select.Item label='Duda/Janda' value='duda_janda' />
+								<Select.Item label='Belum Kawin' value='Belum Kawin' />
+								<Select.Item label='Kawin' value='Kawin' />
+								<Select.Item label='Duda/Janda' value='Duda/Janda' />
 							</Select>
 						)}
 						name='status_pernikahan'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -166,11 +196,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='numeric'
+								keyboardType='numeric'
 							/>
 						)}
 						name='jumlah_tanggungan'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -185,16 +214,14 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='SD' value='sd' />
-								<Select.Item label='SMP' value='smp' />
-								<Select.Item label='SMA' value='sma' />
-								<Select.Item label='D1/D2/D3' value='d1_d2_d3' />
-								<Select.Item label='S1/S2/S3' value='s1_s2_s3' />
-								<Select.Item label='S1/S2/S3' value='s1_s2_s3' />
+								<Select.Item label='SD' value='SD' />
+								<Select.Item label='SMP' value='SMP' />
+								<Select.Item label='SMA' value='SMA' />
+								<Select.Item label='D1/D2/D3/D4' value='D1/D2/D3/D4' />
+								<Select.Item label='S1/S2/S3' value='S1/S2/S3' />
 							</Select>
 						)}
 						name='pendidikan_terakhir'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -213,8 +240,7 @@ export default function DataPemohon({ debiturId }) {
 								<Select.Item label='Perempuan' value='perempuan' />
 							</Select>
 						)}
-						name='status_pernikahan'
-						defaultValue=''
+						name='jenis_kelamin'
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -231,8 +257,7 @@ export default function DataPemohon({ debiturId }) {
 									placeholder='Alamat'
 								/>
 							)}
-							name='alamat'
-							defaultValue=''
+							name='alamat_ktp'
 							shouldUnregister={true}
 						/>
 						<HStack space='12px'>
@@ -244,12 +269,11 @@ export default function DataPemohon({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='rt'
-								defaultValue=''
+								name='alamat_ktp_rt'
 								shouldUnregister={true}
 							/>
 							<Controller
@@ -260,12 +284,11 @@ export default function DataPemohon({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='rw'
-								defaultValue=''
+								name='alamat_ktp_rw'
 								shouldUnregister={true}
 							/>
 							<Controller
@@ -276,12 +299,11 @@ export default function DataPemohon({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='kode_pos'
-								defaultValue=''
+								name='alamat_ktp_kode_pos'
 								shouldUnregister={true}
 							/>
 						</HStack>
@@ -297,8 +319,7 @@ export default function DataPemohon({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kelurahan'
-								defaultValue=''
+								name='alamat_ktp_kelurahan'
 								shouldUnregister={true}
 							/>
 							<Controller
@@ -312,8 +333,7 @@ export default function DataPemohon({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kecamatan'
-								defaultValue=''
+								name='alamat_ktp_kecamatan'
 								shouldUnregister={true}
 							/>
 						</HStack>
@@ -327,8 +347,7 @@ export default function DataPemohon({ debiturId }) {
 									placeholder='Kota'
 								/>
 							)}
-							name='kota'
-							defaultValue=''
+							name='alamat_ktp_kota'
 							shouldUnregister={true}
 						/>
 					</VStack>
@@ -346,8 +365,7 @@ export default function DataPemohon({ debiturId }) {
 									placeholder='Alamat'
 								/>
 							)}
-							name='alamat'
-							defaultValue=''
+							name='alamat_domisili'
 							shouldUnregister={true}
 						/>
 						<HStack space='12px'>
@@ -359,12 +377,11 @@ export default function DataPemohon({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='rt'
-								defaultValue=''
+								name='alamat_domisili_rt'
 								shouldUnregister={true}
 							/>
 							<Controller
@@ -375,12 +392,11 @@ export default function DataPemohon({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='rw'
-								defaultValue=''
+								name='alamat_domisili_rw'
 								shouldUnregister={true}
 							/>
 							<Controller
@@ -391,12 +407,11 @@ export default function DataPemohon({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='kode_pos'
-								defaultValue=''
+								name='alamat_domisili_kode_pos'
 								shouldUnregister={true}
 							/>
 						</HStack>
@@ -412,8 +427,7 @@ export default function DataPemohon({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kelurahan'
-								defaultValue=''
+								name='alamat_domisili_kelurahan'
 								shouldUnregister={true}
 							/>
 							<Controller
@@ -427,8 +441,7 @@ export default function DataPemohon({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kecamatan'
-								defaultValue=''
+								name='alamat_domisili_kecamatan'
 								shouldUnregister={true}
 							/>
 						</HStack>
@@ -442,8 +455,7 @@ export default function DataPemohon({ debiturId }) {
 									placeholder='Kota'
 								/>
 							)}
-							name='kota'
-							defaultValue=''
+							name='alamat_domisili_kota'
 							shouldUnregister={true}
 						/>
 					</VStack>
@@ -459,9 +471,9 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Milik Sendiri' value='milik_sendiri' />
-								<Select.Item label='Rumah Kontrak' value='rumah_kontrak' />
-								<Select.Item label='Rumah Keluarga' value='rumah_keluarga' />
+								<Select.Item label='Milik Sendiri' value='Milik Sendiri' />
+								<Select.Item label='Rumah Kontrak' value='Rumah Kontrak' />
+								<Select.Item label='Rumah Keluarga' value='Rumah Keluarga' />
 								<Select.Item
 									label='Rumah Dinas/Perusahaan'
 									value='rumah_dinas_perusahaan'
@@ -469,7 +481,6 @@ export default function DataPemohon({ debiturId }) {
 							</Select>
 						)}
 						name='status_rumah'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -485,7 +496,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='lama_tinggal'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -498,11 +508,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_hp'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -530,11 +539,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_whatsapp'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -547,11 +555,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -564,11 +571,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_fax'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -581,11 +587,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='numeric'
+								keyboardType='numeric'
 							/>
 						)}
 						name='no_npwp'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 					<FormControl.HelperText>
@@ -602,11 +607,10 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='email-address'
+								keyboardType='email-address'
 							/>
 						)}
 						name='email'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -621,12 +625,11 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='WNI' value='wni' />
-								<Select.Item label='WNA' value='wna' />
+								<Select.Item label='WNI' value='WNI' />
+								<Select.Item label='WNA' value='WNA' />
 							</Select>
 						)}
 						name='kewarganegaraan'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -643,12 +646,11 @@ export default function DataPemohon({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Barang' value='barang' />
-								<Select.Item label='Jasa' value='jasa' />
+								<Select.Item label='Barang' value='Barang' />
+								<Select.Item label='Jasa' value='Jasa' />
 							</Select>
 						)}
 						name='tujuan_pembiayaan'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -664,7 +666,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='nama_bank'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -680,7 +681,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='rekening_atas_nama'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>
@@ -696,7 +696,6 @@ export default function DataPemohon({ debiturId }) {
 							/>
 						)}
 						name='tujuan_pengadaan_barang_jasa'
-						defaultValue=''
 						shouldUnregister={true}
 					/>
 				</FormControl>

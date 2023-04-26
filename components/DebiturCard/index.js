@@ -10,14 +10,16 @@ import {
 } from 'native-base';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { STATUS_SURVEI } from '../../lib/constants';
-import { TouchableOpacity } from 'react-native';
-import { Linking } from 'react-native';
+import { TouchableOpacity, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const DebiturCard = ({ formPengajuanData }) => {
 	const navigation = useNavigation();
 
-	const { _id } = formPengajuanData;
+	const { _id: formPengajuanId } = formPengajuanData;
+	const { _id: formPermohonanId } = formPengajuanData.form_permohonan;
+	const { _id: debiturId } = formPengajuanData.user;
+
 	const { alamat, rt, rw, kelurahan, kecamatan, kota, kode_pos } =
 		formPengajuanData.alamat_domisili;
 	const { koordinat_lokasi } = formPengajuanData.alamat_domisili;
@@ -56,7 +58,8 @@ const DebiturCard = ({ formPengajuanData }) => {
 								borderColor='primary.400'
 								onPress={() =>
 									navigation.navigate('FormPermohonan', {
-										_id,
+										formPermohonanId,
+										debiturId,
 									})
 								}
 							>
@@ -70,7 +73,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 								borderColor='primary.400'
 								onPress={() =>
 									navigation.navigate('FormSurvei', {
-										_id,
+										debiturId,
 									})
 								}
 							>
@@ -82,7 +85,9 @@ const DebiturCard = ({ formPengajuanData }) => {
 								borderColor='primary.400'
 								onPress={() =>
 									navigation.navigate('BuktiDokumen', {
-										_id,
+										debiturId,
+										formPengajuanId,
+										formPermohonanId,
 									})
 								}
 							>
