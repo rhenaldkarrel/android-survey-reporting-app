@@ -57,18 +57,18 @@ export default function DataPekerjaan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Karyawan' value='karyawan' />
-								<Select.Item label='Pegawai Negeri' value='pegawai_negeri' />
-								<Select.Item label='Pegawai Swasta' value='pegawai_swasta' />
-								<Select.Item label='TNI/POLRI/DPR' value='tni_polri_dpr' />
-								<Select.Item label='Wiraswasta' value='wiraswasta' />
-								<Select.Item label='Pedagang/Pengusaha' value='pedagang_pengusaha' />
-								<Select.Item label='Petani/Nelayan/Peternak' value='petani_nelayan_peternak' />
-								<Select.Item label='Profesi' value='profesi' />
-								<Select.Item label='Dokter' value='dokter' />
-								<Select.Item label='Dosen/Guru' value='dosen_guru' />
-								<Select.Item label='Wartawan' value='wartawan' />
-								<Select.Item label='Hakim/Jaksa/Pengacara' value='hakim_jaksa_pengacara' />
+								<Select.Item label='Karyawan' value='Karyawan' />
+								<Select.Item label='Pegawai Negeri' value='Pegawai Negeri' />
+								<Select.Item label='Pegawai Swasta' value='Pegawai Swasta' />
+								<Select.Item label='TNI/POLRI/DPR' value='TNI/POLRI/DPR' />
+								<Select.Item label='Wiraswasta' value='Wiraswasta' />
+								<Select.Item label='Pedagang/Pengusaha' value='Pedagang/Pengusaha' />
+								<Select.Item label='Petani/Nelayan/Peternak' value='Petani/Nelayan/Peternak' />
+								<Select.Item label='Profesi' value='Profesi' />
+								<Select.Item label='Dokter' value='Dokter' />
+								<Select.Item label='Dosen/Guru' value='Dosen/Guru' />
+								<Select.Item label='Wartawan' value='Wartawan' />
+								<Select.Item label='Hakim/Jaksa/Pengacara' value='Hakim/Jaksa/Pengacara' />
 							</Select>
 						)}
 						name='pekerjaan'
@@ -221,6 +221,23 @@ export default function DataPekerjaan({ debiturId }) {
 							/>
 						)}
 						name='no_fax'
+						defaultValue=''
+						shouldUnregister={true}
+					/>
+				</FormControl>
+				<FormControl>
+					<FormControl.Label>No. Extension</FormControl.Label>
+					<Controller
+						control={control}
+						render={({ field: { onChange, onBlur, value } }) => (
+							<Input
+								onBlur={onBlur}
+								onChangeText={(val) => onChange(val)}
+								value={value}
+                keyboardType='phone-pad'
+							/>
+						)}
+						name='no_extension'
 						defaultValue=''
 						shouldUnregister={true}
 					/>
