@@ -9,19 +9,31 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useGetDataPasangan } from '../../../api/form-permohonan';
 
-export default function DataPasangan({ debiturId }) {
+export default function DataPasangan({ debiturId, formPermohonanId }) {
+	const { dataPasangan } = useGetDataPasangan(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			nama_lengkap: dataPasangan.nama_lengkap,
+			no_ktp: dataPasangan.no_ktp,
+			tempat_tanggal_lahir: dataPasangan.tempat_tanggal_lahir,
+			jenis_kelamin: dataPasangan.jenis_kelamin,
+			alamat_ktp: dataPasangan.alamat_ktp?.alamat,
+			alamat_ktp_rt: dataPasangan.alamat_ktp?.rt,
+			alamat_ktp_rw: dataPasangan.alamat_ktp?.rw,
+			alamat_ktp_kota: dataPasangan.alamat_ktp?.kota,
+			alamat_ktp_kelurahan: dataPasangan.alamat_ktp?.kelurahan,
+			alamat_ktp_kecamatan: dataPasangan.alamat_ktp?.kecamatan,
+			alamat_ktp_kode_pos: dataPasangan.alamat_ktp?.kode_pos?.toString(),
+			no_hp: dataPasangan.no_hp,
+			pekerjaan: dataPasangan.pekerjaan,
 		},
 	});
 
@@ -58,7 +70,7 @@ export default function DataPasangan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='numeric'
+								keyboardType='numeric'
 							/>
 						)}
 						name='no_ktp'
@@ -98,7 +110,7 @@ export default function DataPasangan({ debiturId }) {
 								<Select.Item label='Perempuan' value='perempuan' />
 							</Select>
 						)}
-						name='status_pernikahan'
+						name='jenis_kelamin'
 						defaultValue=''
 						shouldUnregister={true}
 					/>
@@ -116,7 +128,7 @@ export default function DataPasangan({ debiturId }) {
 									placeholder='Alamat'
 								/>
 							)}
-							name='alamat'
+							name='alamat_ktp'
 							defaultValue=''
 							shouldUnregister={true}
 						/>
@@ -129,11 +141,11 @@ export default function DataPasangan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='rt'
+								name='alamat_ktp_rt'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -145,11 +157,11 @@ export default function DataPasangan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='rw'
+								name='alamat_ktp_rw'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -161,11 +173,11 @@ export default function DataPasangan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
-								name='kode_pos'
+								name='alamat_ktp_kode_pos'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -182,7 +194,7 @@ export default function DataPasangan({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kelurahan'
+								name='alamat_ktp_kelurahan'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -197,7 +209,7 @@ export default function DataPasangan({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kecamatan'
+								name='alamat_ktp_kecamatan'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -212,7 +224,7 @@ export default function DataPasangan({ debiturId }) {
 									placeholder='Kota'
 								/>
 							)}
-							name='kota'
+							name='alamat_ktp_kota'
 							defaultValue=''
 							shouldUnregister={true}
 						/>
@@ -227,7 +239,7 @@ export default function DataPasangan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_hp'
@@ -244,7 +256,7 @@ export default function DataPasangan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
@@ -258,15 +270,15 @@ export default function DataPasangan({ debiturId }) {
 						control={control}
 						render={({ field: { onChange, onBlur, value } }) => (
 							<Select
-								placeholder='Agama'
+								placeholder='Pekerjaan'
 								selectedValue={value}
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Karyawan' value='karyawan' />
-								<Select.Item label='Wiraswasta' value='wiraswasta' />
-								<Select.Item label='Profesi' value='profesi' />
-								<Select.Item label='Tidak Bekerja' value='tidak_bekerja' />
+								<Select.Item label='Karyawan' value='Karyawan' />
+								<Select.Item label='Wiraswasta' value='Wiraswasta' />
+								<Select.Item label='Profesi' value='Profesi' />
+								<Select.Item label='Tidak Bekerja' value='Tidak Bekerja' />
 							</Select>
 						)}
 						name='pekerjaan'
