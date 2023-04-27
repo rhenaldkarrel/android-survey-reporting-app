@@ -274,3 +274,38 @@ export const useDataPenghasilan = (formPermohonanId) => {
 
 	return { dataPenghasilan, postDataPenghasilan };
 };
+
+export const useDataStrukturPembiayaan = (formPermohonanId) => {
+	const [dataStrukturPembiayaan, setDataStrukturPembiayaan] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataStrukturPembiayaan = async () => {
+		try {
+			const res = await axios.get(
+				'/surveyor/form-permohonan/data-struktur-pembiayaan/' + formPermohonanId
+			);
+
+			setDataStrukturPembiayaan(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const postDataStrukturPembiayaan = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-strukturPembiayaan/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	useEffect(() => {
+		getDataStrukturPembiayaan();
+	}, []);
+
+	return { dataStrukturPembiayaan, postDataStrukturPembiayaan };
+};
