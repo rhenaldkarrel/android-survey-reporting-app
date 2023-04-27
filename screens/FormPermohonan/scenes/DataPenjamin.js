@@ -81,7 +81,7 @@ export default function DataPenjamin({ debiturId }) {
 								<Select.Item label='Perempuan' value='perempuan' />
 							</Select>
 						)}
-						name='status_pernikahan'
+						name='jenis_kelamin'
 						defaultValue=''
 						shouldUnregister={true}
 					/>
@@ -100,7 +100,7 @@ export default function DataPenjamin({ debiturId }) {
 									keyboardType='numeric'
 								/>
 							)}
-							name='alamat'
+							name='alamat_ktp'
 							defaultValue=''
 							shouldUnregister={true}
 						/>
@@ -117,7 +117,7 @@ export default function DataPenjamin({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='rt'
+								name='alamat_ktp_rt'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -132,7 +132,7 @@ export default function DataPenjamin({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='rw'
+								name='alamat_ktp_rw'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -148,7 +148,7 @@ export default function DataPenjamin({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kode_pos'
+								name='alamat_ktp_kode_pos'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -165,7 +165,7 @@ export default function DataPenjamin({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kelurahan'
+								name='alamat_ktp_kelurahan'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -180,7 +180,7 @@ export default function DataPenjamin({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kecamatan'
+								name='alamat_ktp_kecamatan'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -195,7 +195,7 @@ export default function DataPenjamin({ debiturId }) {
 									placeholder='Kota'
 								/>
 							)}
-							name='kota'
+							name='alamat_ktp_kota'
 							defaultValue=''
 							shouldUnregister={true}
 						/>
@@ -241,15 +241,15 @@ export default function DataPenjamin({ debiturId }) {
 						control={control}
 						render={({ field: { onChange, onBlur, value } }) => (
 							<Select
-								placeholder='Agama'
+								placeholder='Pekerjaan'
 								selectedValue={value}
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Karyawan' value='karyawan' />
-								<Select.Item label='Wiraswasta' value='wiraswasta' />
-								<Select.Item label='Profesi' value='profesi' />
-								<Select.Item label='Tidak Bekerja' value='tidak_bekerja' />
+								<Select.Item label='Karyawan' value='Karyawan' />
+								<Select.Item label='Wiraswasta' value='Wiraswasta' />
+								<Select.Item label='Profesi' value='Profesi' />
+								<Select.Item label='Tidak Bekerja' value='Tidak Bekerja' />
 							</Select>
 						)}
 						name='pekerjaan'
