@@ -169,3 +169,38 @@ export const useDataPekerjaan = (formPermohonanId) => {
 
 	return { dataPekerjaan, postDataPekerjaan };
 };
+
+export const useDataAsuransi = (formPermohonanId) => {
+	const [dataAsuransi, setDataAsuransi] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataAsuransi = async () => {
+		try {
+			const res = await axios.get(
+				'/surveyor/form-permohonan/data-asuransi/' + formPermohonanId
+			);
+
+			setDataAsuransi(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const postDataAsuransi = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-asuransi/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	useEffect(() => {
+		getDataAsuransi();
+	}, []);
+
+	return { dataAsuransi, postDataAsuransi };
+};
