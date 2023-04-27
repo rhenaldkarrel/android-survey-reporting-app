@@ -33,8 +33,8 @@ export default function DataPenghasilan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Ya' value='ya' />
-								<Select.Item label='Tidak' value='tidak' />
+								<Select.Item label='Ya' value='true' />
+								<Select.Item label='Tidak' value='false' />
 							</Select>
 						)}
 						name='joint_income'
@@ -64,16 +64,16 @@ export default function DataPenghasilan({ debiturId }) {
 						control={control}
 						render={({ field: { onChange, onBlur, value } }) => (
 							<Select
-								placeholder='Premi Dibayar Secara'
+								placeholder='Sumber Penghasilan'
 								selectedValue={value}
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Hasil Usaha' value='hasil_usaha' />
-								<Select.Item label='Gaji' value='gaji' />
-								<Select.Item label='Hasil Sewa' value='hasil_sewa' />
-								<Select.Item label='Bunga Deviden' value='bunga_deviden' />
-								<Select.Item label='Orangtua' value='orang_tua' />
+								<Select.Item label='Hasil Usaha' value='Hasil Usaha' />
+								<Select.Item label='Gaji' value='Gaji' />
+								<Select.Item label='Hasil Sewa' value='Hasil Sewa' />
+								<Select.Item label='Bunga Deviden' value='Bunga Deviden' />
+								<Select.Item label='Orangtua' value='Orangtua' />
 							</Select>
 						)}
 						name='sumber_penghasilan'
@@ -100,7 +100,9 @@ export default function DataPenghasilan({ debiturId }) {
 					/>
 				</FormControl>
 				<FormControl>
-					<FormControl.Label>Penerimaan Penghasilan Utama</FormControl.Label>
+					<FormControl.Label>
+						Sumber Penerimaan Penghasilan Utama
+					</FormControl.Label>
 					<Controller
 						control={control}
 						render={({ field: { onChange, onBlur, value } }) => (
@@ -189,22 +191,16 @@ export default function DataPenghasilan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item
-									label='<= 5.000.000'
-									value='kurang_dari_sama_dengan_lima_juta_rupiah'
-								/>
+								<Select.Item label='<= 5.000.000' value='<= 5 juta rupiah' />
 								<Select.Item
 									label='>= 5.000.000-15.000.000'
-									value='lebih_dari_sama_dengan_lima_juta_sampai_lima_belas_juta_rupiah'
+									value='>= 5 sampai 15 juta rupiah'
 								/>
 								<Select.Item
 									label='> 15.000.000-25.000.000'
-									value='lebih_dari_lima_belas_juta_sampai_dua_puluh_lima_juta_rupiah'
+									value='> 15 sampai 25 juta rupiah'
 								/>
-								<Select.Item
-									label='> 25.000.000'
-									value='lebih_dari_dua_puluh_lima_juta_rupiah'
-								/>
+								<Select.Item label='> 25.000.000' value='> 25 juta rupiah' />
 							</Select>
 						)}
 						name='kisaran_total_penghasilan'
