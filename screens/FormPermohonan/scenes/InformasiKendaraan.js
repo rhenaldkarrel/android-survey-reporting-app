@@ -42,17 +42,17 @@ export default function InformasiKendaraan({ debiturId }) {
 							>
 								<Select.Item
 									label='Sedan/Jeep/Minibus'
-									value='sedan_jeep_minibus'
+									value='Sedan/Jeep/Minibus'
 								/>
-								<Select.Item label='Light Truck' value='light_truck' />
-								<Select.Item label='Pick Up' value='pick_up' />
+								<Select.Item label='Light Truck' value='Light Truck' />
+								<Select.Item label='Pick Up' value='Pick Up' />
 								<Select.Item
 									label='Single Cabin/Double Cabin'
-									value='single_double_cabin'
+									value='Single Cabin/Double Cabin'
 								/>
 								<Select.Item
 									label='Medium & Heavy Duty Truck'
-									value='single_heavy_duty_truck'
+									value='Medium & Heavy Duty Truck'
 								/>
 							</Select>
 						)}
@@ -107,15 +107,15 @@ export default function InformasiKendaraan({ debiturId }) {
 							>
 								<Select.Item
 									label='Atas Nama Pemohon'
-									value='atas_nama_pemohon'
+									value='Atas Nama Pemohon'
 								/>
 								<Select.Item
 									label='Atas Nama Pasangan'
-									value='atas_nama_pasangan'
+									value='Atas Nama Pasangan'
 								/>
 								<Select.Item
 									label='Atas Nama Orang Lain'
-									value='atas_nama_orang_lain'
+									value='Atas Nama Orang Lain'
 								/>
 							</Select>
 						)}
@@ -199,8 +199,8 @@ export default function InformasiKendaraan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Pribadi' value='pribadi' />
-								<Select.Item label='Komersial' value='komersial' />
+								<Select.Item label='Pribadi' value='Pribadi' />
+								<Select.Item label='Komersial' value='Komersial' />
 							</Select>
 						)}
 						name='pemakaian'
