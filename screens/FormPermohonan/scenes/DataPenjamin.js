@@ -9,19 +9,32 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataPenjamin } from '../../../api/form-permohonan';
 
-export default function DataPenjamin({ debiturId }) {
+export default function DataPenjamin({ debiturId, formPermohonanId }) {
+	const { dataPenjamin, postDataPenjamin } = useDataPenjamin(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			nama_lengkap: dataPenjamin.nama_lengkap,
+			no_ktp: dataPenjamin.no_ktp,
+			tempat_tanggal_lahir: dataPenjamin.tempat_tanggal_lahir,
+			jenis_kelamin: dataPenjamin.jenis_kelamin,
+			alamat_ktp: dataPenjamin.alamat_ktp?.alamat,
+			alamat_ktp_rt: dataPenjamin.alamat_ktp?.rt,
+			alamat_ktp_rw: dataPenjamin.alamat_ktp?.rw,
+			alamat_ktp_kota: dataPenjamin.alamat_ktp?.kota,
+			alamat_ktp_kelurahan: dataPenjamin.alamat_ktp?.kelurahan,
+			alamat_ktp_kecamatan: dataPenjamin.alamat_ktp?.kecamatan,
+			alamat_ktp_kode_pos: dataPenjamin.alamat_ktp?.kode_pos?.toString(),
+			no_hp: dataPenjamin.no_hp,
+			no_telp: dataPenjamin.no_telp,
+			pekerjaan: dataPenjamin.pekerjaan,
 		},
 	});
 
@@ -97,7 +110,6 @@ export default function DataPenjamin({ debiturId }) {
 									onChangeText={(val) => onChange(val)}
 									value={value}
 									placeholder='Alamat'
-									keyboardType='numeric'
 								/>
 							)}
 							name='alamat_ktp'
@@ -129,6 +141,7 @@ export default function DataPenjamin({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
+                    keyboardType='numeric'
 										flex={1}
 									/>
 								)}
