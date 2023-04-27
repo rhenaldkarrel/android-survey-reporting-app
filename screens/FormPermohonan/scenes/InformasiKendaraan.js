@@ -8,19 +8,29 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataKendaraan } from '../../../api/form-permohonan';
 
-export default function InformasiKendaraan({ debiturId }) {
+export default function InformasiKendaraan({ debiturId, formPermohonanId }) {
+	const { dataKendaraan, postDataKendaraan } =
+		useDataKendaraan(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			jenis_kendaraan: dataKendaraan.jenis_kendaraan,
+			merk_tipe: dataKendaraan.merk_tipe,
+			atas_nama_bpkb: dataKendaraan.atas_nama_bpkb,
+			tahun_pembuatan: dataKendaraan.tahun_pembuatan,
+			bukti_kepemilikan: dataKendaraan.bukti_kepemilikan,
+			nama_di_bpkb: dataKendaraan.nama_di_bpkb,
+			alamat_di_bpkb: dataKendaraan.alamat_di_bpkb,
+			no_polisi: dataKendaraan.no_polisi,
+			pemakaian: dataKendaraan.pemakaian,
+			lokasi_kendaraan: dataKendaraan.lokasi_kendaraan,
 		},
 	});
 
