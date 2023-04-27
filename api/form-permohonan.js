@@ -239,3 +239,38 @@ export const useDataKendaraan = (formPermohonanId) => {
 
 	return { dataKendaraan, postDataKendaraan };
 };
+
+export const useDataPenghasilan = (formPermohonanId) => {
+	const [dataPenghasilan, setDataPenghasilan] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataPenghasilan = async () => {
+		try {
+			const res = await axios.get(
+				'/surveyor/form-permohonan/data-penghasilan/' + formPermohonanId
+			);
+
+			setDataPenghasilan(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const postDataPenghasilan = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-penghasilan/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	useEffect(() => {
+		getDataPenghasilan();
+	}, []);
+
+	return { dataPenghasilan, postDataPenghasilan };
+};
