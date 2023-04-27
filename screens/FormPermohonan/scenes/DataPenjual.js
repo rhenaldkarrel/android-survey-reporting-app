@@ -7,19 +7,28 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataPenjual } from '../../../api/form-permohonan';
 
-export default function DataPenjual({ debiturId }) {
+export default function DataPenjual({ debiturId, formPermohonanId }) {
+	const { dataPenjual, postDataPenjual } = useDataPenjual(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			nama_penjual_supplier_developer:
+				dataPenjual.nama_penjual_supplier_developer,
+			alamat: dataPenjual.alamat?.alamat,
+			rt: dataPenjual.alamat?.rt,
+			rw: dataPenjual.alamat?.rw,
+			kelurahan: dataPenjual.alamat?.kelurahan,
+			kecamatan: dataPenjual.alamat?.kecamatan,
+			kota: dataPenjual.alamat?.kota,
+			kode_pos: dataPenjual.alamat?.kode_pos?.toString(),
+			no_telp: dataPenjual.no_telp,
 		},
 	});
 
