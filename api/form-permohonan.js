@@ -134,3 +134,38 @@ export const useDataKerabat = (formPermohonanId) => {
 
 	return { dataKerabat, postDataKerabat };
 };
+
+export const useDataPekerjaan = (formPermohonanId) => {
+	const [dataPekerjaan, setDataPekerjaan] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataPekerjaan = async () => {
+		try {
+			const res = await axios.get(
+				'/surveyor/form-permohonan/data-pekerjaan/' + formPermohonanId
+			);
+
+			setDataPekerjaan(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const postDataPekerjaan = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-pekerjaan/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	useEffect(() => {
+		getDataPekerjaan();
+	}, []);
+
+	return { dataPekerjaan, postDataPekerjaan };
+};
