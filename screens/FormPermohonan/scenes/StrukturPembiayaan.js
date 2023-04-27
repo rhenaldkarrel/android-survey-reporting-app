@@ -10,14 +10,39 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataStrukturPembiayaan } from '../../../api/form-permohonan';
 
-export default function StrukturPembiayaan({ debiturId }) {
+export default function StrukturPembiayaan({ debiturId, formPermohonanId }) {
+	const { dataStrukturPembiayaan, postDataStrukturPembiayaan } =
+		useDataStrukturPembiayaan(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
-	} = useForm({});
+	} = useForm({
+		values: {
+			harga_kendaraan: dataStrukturPembiayaan.harga_kendaraan?.toString(),
+			uang_muka: dataStrukturPembiayaan.uang_muka?.toString(),
+			jumlah_pembiayaan: dataStrukturPembiayaan.jumlah_pembiayaan?.toString(),
+			suku_bunga_margin: dataStrukturPembiayaan.suku_bunga_margin?.toString(),
+			jenis_bunga: dataStrukturPembiayaan.jenis_bunga,
+			biaya_administrasi: dataStrukturPembiayaan.biaya_administrasi?.toString(),
+			biaya_provinsi: dataStrukturPembiayaan.biaya_provinsi?.toString(),
+			biaya_lainnya: dataStrukturPembiayaan.biaya_lainnya,
+			nominal_biaya_lainnya:
+				dataStrukturPembiayaan.nominal_biaya_lainnya?.toString(),
+			angsuran_bulanan: dataStrukturPembiayaan.angsuran_bulanan?.toString(),
+			jangka_waktu_pembiayaan: parseInt(
+				dataStrukturPembiayaan.jangka_waktu_pembiayaan
+			).toString(),
+			angsuran_pertama_dibayar: dataStrukturPembiayaan.angsuran_pertama_dibayar,
+			tanggal_jatuh_tempo: dataStrukturPembiayaan.tanggal_jatuh_tempo,
+			tanggal_mulai: dataStrukturPembiayaan.tanggal_mulai,
+			cara_bayar_angsuran: dataStrukturPembiayaan.cara_bayar_angsuran,
+		},
+	});
 
 	return (
 		<ScrollView
@@ -107,8 +132,8 @@ export default function StrukturPembiayaan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Efektif' value='efektif' />
-								<Select.Item label='Flat' value='flat' />
+								<Select.Item label='Efektif' value='Efektif' />
+								<Select.Item label='Flat' value='Flat' />
 							</Select>
 						)}
 						name='jenis_bunga'
@@ -163,12 +188,12 @@ export default function StrukturPembiayaan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='BBN/Pajak/STNK' value='bbn_pajak_stnk' />
+								<Select.Item label='BBN/Pajak/STNK' value='BBN/Pajak/STNK' />
 								<Select.Item
 									label='Pelunasan Kontrak'
-									value='pelunasan_kontrak'
+									value='Pelunasan Kontrak'
 								/>
-								<Select.Item label='Lainnya' value='lainnya' />
+								<Select.Item label='Lainnya' value='Lainnya' />
 							</Select>
 						)}
 						name='biaya_lainnya'
@@ -233,15 +258,16 @@ export default function StrukturPembiayaan({ debiturId }) {
 				<FormControl>
 					<Controller
 						control={control}
-						render={({ field: { onChange } }) => (
+						render={({ field: { onChange, value } }) => (
 							<Radio.Group
 								name='angsuran_pertama_dibayar'
 								onChange={(val) => onChange(val)}
+								value={value}
 							>
-								<Radio value='angsuran_pertama_dibayar_dimuka' my='4px'>
+								<Radio value='Dimuka' my='4px'>
 									<Text mx={2}>Angsuran Pertama Dibayar Dimuka</Text>
 								</Radio>
-								<Radio value='angsuran_pertama_dibayar_dibelakang'>
+								<Radio value='Dibelakang'>
 									<Text mx={2}>Angsuran Pertama Dibayar Dibelakang</Text>
 								</Radio>
 							</Radio.Group>
@@ -296,9 +322,9 @@ export default function StrukturPembiayaan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Tunai' value='tunai' />
-								<Select.Item label='Transfer' value='transfer' />
-								<Select.Item label='Giro' value='giro' />
+								<Select.Item label='Tunai' value='Tunai' />
+								<Select.Item label='Transfer' value='Transfer' />
+								<Select.Item label='Giro' value='Giro' />
 							</Select>
 						)}
 						name='cara_bayar_angsuran'
