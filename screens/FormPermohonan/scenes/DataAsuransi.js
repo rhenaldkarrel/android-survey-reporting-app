@@ -10,9 +10,12 @@ import {
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { useDataAsuransi } from '../../../api/form-permohonan';
+import { useState } from 'react';
+import { ToastAndroid } from 'react-native';
 
 export default function DataAsuransi({ debiturId, formPermohonanId }) {
 	const { dataAsuransi, postDataAsuransi } = useDataAsuransi(formPermohonanId);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		control,
@@ -29,6 +32,36 @@ export default function DataAsuransi({ debiturId, formPermohonanId }) {
 			jaminan_tambahan: dataAsuransi.jaminan_tambahan,
 		},
 	});
+
+	const onSubmit = async (data) => {
+		setIsLoading(true);
+
+		ToastAndroid.show('Mohon tunggu sebentar...', ToastAndroid.SHORT);
+
+		const formattedData = {
+			...data,
+			nilai_pertanggungan: Number(data.nilai_pertanggungan),
+			nominal_premi_dibayar: Number(data.nominal_premi_dibayar),
+			periode_premi_dibayar: Number(data.periode_premi_dibayar),
+		};
+
+		try {
+			const response = await postDataAsuransi(formattedData);
+
+			if (response.success) {
+				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+			} else {
+				throw new Error('Terjadi kesalahan ketika menyimpan data!');
+			}
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<ScrollView
@@ -148,7 +181,13 @@ export default function DataAsuransi({ debiturId, formPermohonanId }) {
 						shouldUnregister={true}
 					/>
 				</FormControl>
-				<Button bgColor='primary.400'>Simpan Data</Button>
+				<Button
+					bgColor='primary.400'
+					onPress={handleSubmit(onSubmit)}
+					isLoading={isLoading}
+				>
+					Simpan Data
+				</Button>
 			</VStack>
 		</ScrollView>
 	);
