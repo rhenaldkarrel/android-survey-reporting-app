@@ -8,14 +8,31 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataPenghasilan } from '../../../api/form-permohonan';
 
-export default function DataPenghasilan({ debiturId }) {
+export default function DataPenghasilan({ debiturId, formPermohonanId }) {
+	const { dataPenghasilan, postDataPenghasilan } =
+		useDataPenghasilan(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
-	} = useForm({});
+	} = useForm({
+		values: {
+			joint_income: dataPenghasilan.joint_income?.toString(),
+			jabatan_golongan: dataPenghasilan.jabatan_golongan,
+			sumber_penghasilan: dataPenghasilan.sumber_penghasilan,
+			penghasilan_utama: dataPenghasilan.penghasilan_utama?.toString(),
+			sumber_penerimaan_penghasilan_utama:
+				dataPenghasilan.sumber_penerimaan_penghasilan_utama,
+			penghasilan_pasangan: dataPenghasilan.penghasilan_pasangan?.toString(),
+			penghasilan_tambahan: dataPenghasilan.penghasilan_tambahan?.toString(),
+			sumber_penghasilan_tambahan: dataPenghasilan.sumber_penghasilan_tambahan,
+			kisaran_total_penghasilan: dataPenghasilan.kisaran_total_penghasilan,
+		},
+	});
 
 	return (
 		<ScrollView
@@ -112,8 +129,8 @@ export default function DataPenghasilan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Tunai' value='tunai' />
-								<Select.Item label='Transfer' value='transfer' />
+								<Select.Item label='Tunai' value='Tunai' />
+								<Select.Item label='Transfer' value='Transfer' />
 							</Select>
 						)}
 						name='sumber_penerimaan_penghasilan_utama'
@@ -168,11 +185,11 @@ export default function DataPenghasilan({ debiturId }) {
 								onBlur={onBlur}
 								onValueChange={(val) => onChange(val)}
 							>
-								<Select.Item label='Hasil Usaha' value='hasil_usaha' />
-								<Select.Item label='Gaji' value='gaji' />
-								<Select.Item label='Hasil Sewa' value='hasil_sewa' />
-								<Select.Item label='Bunga Deviden' value='bunga_deviden' />
-								<Select.Item label='Orangtua' value='orang_tua' />
+								<Select.Item label='Hasil Usaha' value='Hasil Usaha' />
+								<Select.Item label='Gaji' value='Gaji' />
+								<Select.Item label='Hasil Sewa' value='Hasil Sewa' />
+								<Select.Item label='Bunga Deviden' value='Bunga Deviden' />
+								<Select.Item label='Orangtua' value='Orangtua' />
 							</Select>
 						)}
 						name='sumber_penghasilan_tambahan'
