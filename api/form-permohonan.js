@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { ToastAndroid } from 'react-native';
 
-export const useGetDataPemohon = (formPermohonanId) => {
+export const useDataPemohon = (formPermohonanId) => {
 	const [dataPemohon, setDataPemohon] = useState({});
 	const axios = useAxiosPrivate();
 
@@ -14,17 +14,7 @@ export const useGetDataPemohon = (formPermohonanId) => {
 		setDataPemohon(res.data.data);
 	};
 
-	useEffect(() => {
-		getDataPemohon();
-	}, []);
-
-	return { dataPemohon };
-};
-
-export const usePostDataPemohon = (formPermohonanId) => {
-	const axios = useAxiosPrivate();
-
-	const postDataPemohon = async (data) => {
+  const postDataPemohon = async (data) => {
 		const res = await axios.post(
 			'/surveyor/form-permohonan/data-pemohon/' + formPermohonanId,
 			data
@@ -33,7 +23,11 @@ export const usePostDataPemohon = (formPermohonanId) => {
 		return res.data;
 	};
 
-	return postDataPemohon;
+	useEffect(() => {
+		getDataPemohon();
+	}, []);
+
+	return { dataPemohon, postDataPemohon };
 };
 
 export const useDataPasangan = (formPermohonanId) => {

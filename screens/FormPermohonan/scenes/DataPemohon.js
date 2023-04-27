@@ -11,16 +11,14 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { ToastAndroid } from 'react-native';
 import {
-	useGetDataPemohon,
-	usePostDataPemohon,
+	useDataPemohon
 } from '../../../api/form-permohonan';
 import { useState } from 'react';
 
 export default function DataPemohon({ debiturId, formPermohonanId }) {
 	const [isLoading, setIsLoading] = useState(false);
 
-	const { dataPemohon } = useGetDataPemohon(formPermohonanId);
-	const postDataPemohon = usePostDataPemohon(formPermohonanId);
+	const { dataPemohon, postDataPemohon } = useDataPemohon(formPermohonanId);
 
 	const {
 		control,
