@@ -11,10 +11,13 @@ import {
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { useDataStrukturPembiayaan } from '../../../api/form-permohonan';
+import { ToastAndroid } from 'react-native';
+import { useState } from 'react';
 
 export default function StrukturPembiayaan({ debiturId, formPermohonanId }) {
 	const { dataStrukturPembiayaan, postDataStrukturPembiayaan } =
 		useDataStrukturPembiayaan(formPermohonanId);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		control,
@@ -43,6 +46,42 @@ export default function StrukturPembiayaan({ debiturId, formPermohonanId }) {
 			cara_bayar_angsuran: dataStrukturPembiayaan.cara_bayar_angsuran,
 		},
 	});
+
+	const onSubmit = async (data) => {
+		setIsLoading(true);
+
+		ToastAndroid.show('Mohon tunggu sebentar...', ToastAndroid.SHORT);
+
+		const formattedData = {
+			...data,
+			harga_kendaraan: Number(data.harga_kendaraan),
+			uang_muka: Number(data.uang_muka),
+			jumlah_pembiayaan: Number(data.jumlah_pembiayaan),
+			suku_bunga_margin: Number(data.suku_bunga_margin),
+			biaya_administrasi: Number(data.biaya_administrasi),
+			biaya_provinsi: Number(data.biaya_provinsi),
+			nominal_biaya_lainnya: Number(data.nominal_biaya_lainnya),
+			angsuran_bulanan: Number(data.angsuran_bulanan),
+			jangka_waktu_pembiayaan: data.jangka_waktu_pembiayaan + ' bulan',
+		};
+
+		try {
+			const response = await postDataStrukturPembiayaan(formattedData);
+
+			if (response.success) {
+				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+			} else {
+				throw new Error('Terjadi kesalahan ketika menyimpan data!');
+			}
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<ScrollView
@@ -348,7 +387,13 @@ export default function StrukturPembiayaan({ debiturId, formPermohonanId }) {
 						shouldUnregister={true}
 					/>
 				</FormControl>
-				<Button bgColor='primary.400'>Simpan Data</Button>
+				<Button
+					bgColor='primary.400'
+					onPress={handleSubmit(onSubmit)}
+					isLoading={isLoading}
+				>
+					Simpan Data
+				</Button>
 			</VStack>
 		</ScrollView>
 	);
