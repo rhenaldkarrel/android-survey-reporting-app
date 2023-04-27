@@ -36,7 +36,7 @@ export const usePostDataPemohon = (formPermohonanId) => {
 	return postDataPemohon;
 };
 
-export const useGetDataPasangan = (formPermohonanId) => {
+export const useDataPasangan = (formPermohonanId) => {
 	const [dataPasangan, setDataPasangan] = useState({});
 	const axios = useAxiosPrivate();
 
@@ -55,9 +55,18 @@ export const useGetDataPasangan = (formPermohonanId) => {
 		}
 	};
 
+	const postDataPasangan = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-pasangan/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
 	useEffect(() => {
 		getDataPasangan();
 	}, []);
 
-	return { dataPasangan };
+	return { dataPasangan, postDataPasangan };
 };
