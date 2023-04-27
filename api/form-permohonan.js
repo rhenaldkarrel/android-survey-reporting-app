@@ -296,7 +296,7 @@ export const useDataStrukturPembiayaan = (formPermohonanId) => {
 
 	const postDataStrukturPembiayaan = async (data) => {
 		const res = await axios.post(
-			'/surveyor/form-permohonan/data-strukturPembiayaan/' + formPermohonanId,
+			'/surveyor/form-permohonan/data-struktur-pembiayaan/' + formPermohonanId,
 			data
 		);
 
