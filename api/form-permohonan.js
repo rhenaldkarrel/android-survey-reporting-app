@@ -14,7 +14,7 @@ export const useDataPemohon = (formPermohonanId) => {
 		setDataPemohon(res.data.data);
 	};
 
-  const postDataPemohon = async (data) => {
+	const postDataPemohon = async (data) => {
 		const res = await axios.post(
 			'/surveyor/form-permohonan/data-pemohon/' + formPermohonanId,
 			data
@@ -63,4 +63,39 @@ export const useDataPasangan = (formPermohonanId) => {
 	}, []);
 
 	return { dataPasangan, postDataPasangan };
+};
+
+export const useDataPenjamin = (formPermohonanId) => {
+	const [dataPenjamin, setDataPenjamin] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataPenjamin = async () => {
+		try {
+			const res = await axios.get(
+				'/surveyor/form-permohonan/data-penjamin/' + formPermohonanId
+			);
+
+			setDataPenjamin(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const postDataPenjamin = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-penjamin/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	useEffect(() => {
+		getDataPenjamin();
+	}, []);
+
+	return { dataPenjamin, postDataPenjamin };
 };
