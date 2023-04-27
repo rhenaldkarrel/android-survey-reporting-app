@@ -10,9 +10,12 @@ import {
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { useDataKerabat } from '../../../api/form-permohonan';
+import { useState } from 'react';
+import { ToastAndroid } from 'react-native';
 
 export default function DataKerabat({ debiturId, formPermohonanId }) {
 	const { dataKerabat, postDataKerabat } = useDataKerabat(formPermohonanId);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		control,
@@ -35,6 +38,42 @@ export default function DataKerabat({ debiturId, formPermohonanId }) {
 			hubungan_dengan_pemohon: dataKerabat.hubungan_dengan_pemohon,
 		},
 	});
+
+	const onSubmit = async (data) => {
+		setIsLoading(true);
+
+		ToastAndroid.show('Mohon tunggu sebentar...', ToastAndroid.SHORT);
+
+		const formattedData = {
+			...data,
+			alamat_ktp: {
+				alamat: data.alamat_ktp,
+				rt: data.alamat_ktp_rt,
+				rw: data.alamat_ktp_rw,
+				kecamatan: data.alamat_ktp_kecamatan,
+				kelurahan: data.alamat_ktp_kelurahan,
+				kode_pos: Number(data.alamat_ktp_kode_pos),
+				kota: data.alamat_ktp_kota,
+			},
+		};
+
+		try {
+			const response = await postDataKerabat(formattedData);
+
+			if (response.success) {
+				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+			} else {
+				throw new Error('Terjadi kesalahan ketika menyimpan data!');
+			}
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<ScrollView
@@ -245,7 +284,13 @@ export default function DataKerabat({ debiturId, formPermohonanId }) {
 						shouldUnregister={true}
 					/>
 				</FormControl>
-				<Button bgColor='primary.400'>Simpan Data</Button>
+				<Button
+					bgColor='primary.400'
+					onPress={handleSubmit(onSubmit)}
+					isLoading={isLoading}
+				>
+					Simpan Data
+				</Button>
 			</VStack>
 		</ScrollView>
 	);
