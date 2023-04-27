@@ -64,7 +64,7 @@ export default function DataKerabat({ debiturId }) {
 								<Select.Item label='Perempuan' value='perempuan' />
 							</Select>
 						)}
-						name='status_pernikahan'
+						name='jenis_kelamin'
 						defaultValue=''
 						shouldUnregister={true}
 					/>
@@ -82,7 +82,7 @@ export default function DataKerabat({ debiturId }) {
 									placeholder='Alamat'
 								/>
 							)}
-							name='alamat'
+							name='alamat_ktp'
 							defaultValue=''
 							shouldUnregister={true}
 						/>
@@ -99,7 +99,7 @@ export default function DataKerabat({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='rt'
+								name='alamat_ktp_rt'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -115,7 +115,7 @@ export default function DataKerabat({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='rw'
+								name='alamat_ktp_rw'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -131,7 +131,7 @@ export default function DataKerabat({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kode_pos'
+								name='alamat_ktp_kode_pos'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -148,7 +148,7 @@ export default function DataKerabat({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kelurahan'
+								name='alamat_ktp_kelurahan'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -163,7 +163,7 @@ export default function DataKerabat({ debiturId }) {
 										flex={1}
 									/>
 								)}
-								name='kecamatan'
+								name='alamat_ktp_kecamatan'
 								defaultValue=''
 								shouldUnregister={true}
 							/>
@@ -178,7 +178,7 @@ export default function DataKerabat({ debiturId }) {
 									placeholder='Kota'
 								/>
 							)}
-							name='kota'
+							name='alamat_ktp_kota'
 							defaultValue=''
 							shouldUnregister={true}
 						/>
