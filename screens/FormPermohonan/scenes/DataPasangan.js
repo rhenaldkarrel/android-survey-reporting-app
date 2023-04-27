@@ -12,6 +12,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDataPasangan } from '../../../api/form-permohonan';
 import { ToastAndroid } from 'react-native';
 import { useState } from 'react';
+import _ from 'lodash';
 
 export default function DataPasangan({ debiturId, formPermohonanId }) {
 	const { dataPasangan, postDataPasangan } = useDataPasangan(formPermohonanId);
@@ -59,8 +60,17 @@ export default function DataPasangan({ debiturId, formPermohonanId }) {
 			},
 		};
 
+		const cleanedData = _.omit(formattedData, [
+			'alamat_ktp_rt',
+			'alamat_ktp_rw',
+			'alamat_ktp_kecamatan',
+			'alamat_ktp_kelurahan',
+			'alamat_ktp_kode_pos',
+			'alamat_ktp_kota',
+		]);
+
 		try {
-			const response = await postDataPasangan(formattedData);
+			const response = await postDataPasangan(cleanedData);
 
 			if (response.success) {
 				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);

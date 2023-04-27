@@ -12,6 +12,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDataKerabat } from '../../../api/form-permohonan';
 import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
+import _ from 'lodash';
 
 export default function DataKerabat({ debiturId, formPermohonanId }) {
 	const { dataKerabat, postDataKerabat } = useDataKerabat(formPermohonanId);
@@ -57,8 +58,17 @@ export default function DataKerabat({ debiturId, formPermohonanId }) {
 			},
 		};
 
+		const cleanedData = _.omit(formattedData, [
+			'alamat_ktp_rt',
+			'alamat_ktp_rw',
+			'alamat_ktp_kecamatan',
+			'alamat_ktp_kelurahan',
+			'alamat_ktp_kode_pos',
+			'alamat_ktp_kota',
+		]);
+
 		try {
-			const response = await postDataKerabat(formattedData);
+			const response = await postDataKerabat(cleanedData);
 
 			if (response.success) {
 				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);

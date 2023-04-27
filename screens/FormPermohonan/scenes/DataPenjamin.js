@@ -59,8 +59,17 @@ export default function DataPenjamin({ debiturId, formPermohonanId }) {
 			},
 		};
 
+		const cleanedData = _.omit(formattedData, [
+			'alamat_ktp_rt',
+			'alamat_ktp_rw',
+			'alamat_ktp_kecamatan',
+			'alamat_ktp_kelurahan',
+			'alamat_ktp_kode_pos',
+			'alamat_ktp_kota',
+		]);
+
 		try {
-			const response = await postDataPenjamin(formattedData);
+			const response = await postDataPenjamin(cleanedData);
 
 			if (response.success) {
 				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
