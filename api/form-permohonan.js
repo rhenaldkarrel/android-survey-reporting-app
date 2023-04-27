@@ -99,3 +99,38 @@ export const useDataPenjamin = (formPermohonanId) => {
 
 	return { dataPenjamin, postDataPenjamin };
 };
+
+export const useDataKerabat = (formPermohonanId) => {
+	const [dataKerabat, setDataKerabat] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataKerabat = async () => {
+		try {
+			const res = await axios.get(
+				'/surveyor/form-permohonan/data-kerabat/' + formPermohonanId
+			);
+
+			setDataKerabat(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const postDataKerabat = async (data) => {
+		const res = await axios.post(
+			'/surveyor/form-permohonan/data-kerabat/' + formPermohonanId,
+			data
+		);
+
+		return res.data;
+	};
+
+	useEffect(() => {
+		getDataKerabat();
+	}, []);
+
+	return { dataKerabat, postDataKerabat };
+};
