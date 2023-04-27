@@ -9,19 +9,32 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataPekerjaan } from '../../../api/form-permohonan';
 
-export default function DataPekerjaan({ debiturId }) {
+export default function DataPekerjaan({ debiturId, formPermohonanId }) {
+	const { dataPekerjaan, postDataPekerjaan } =
+		useDataPekerjaan(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			nama_perusahaan_usaha: dataPekerjaan.nama_perusahaan_usaha,
+			pekerjaan: dataPekerjaan.pekerjaan,
+			alamat: dataPekerjaan.alamat_tempat_bekerja?.alamat,
+			rt: dataPekerjaan.alamat_tempat_bekerja?.rt,
+			rw: dataPekerjaan.alamat_tempat_bekerja?.rw,
+			kota: dataPekerjaan.alamat_tempat_bekerja?.kota,
+			kelurahan: dataPekerjaan.alamat_tempat_bekerja?.kelurahan,
+			kecamatan: dataPekerjaan.alamat_tempat_bekerja?.kecamatan,
+			kode_pos: dataPekerjaan.alamat_tempat_bekerja?.kode_pos?.toString(),
+			no_telp: dataPekerjaan.no_telp,
+			no_fax: dataPekerjaan.no_fax,
+			no_extension: dataPekerjaan.no_extension,
+			email: dataPekerjaan.email,
 		},
 	});
 
@@ -62,13 +75,22 @@ export default function DataPekerjaan({ debiturId }) {
 								<Select.Item label='Pegawai Swasta' value='Pegawai Swasta' />
 								<Select.Item label='TNI/POLRI/DPR' value='TNI/POLRI/DPR' />
 								<Select.Item label='Wiraswasta' value='Wiraswasta' />
-								<Select.Item label='Pedagang/Pengusaha' value='Pedagang/Pengusaha' />
-								<Select.Item label='Petani/Nelayan/Peternak' value='Petani/Nelayan/Peternak' />
+								<Select.Item
+									label='Pedagang/Pengusaha'
+									value='Pedagang/Pengusaha'
+								/>
+								<Select.Item
+									label='Petani/Nelayan/Peternak'
+									value='Petani/Nelayan/Peternak'
+								/>
 								<Select.Item label='Profesi' value='Profesi' />
 								<Select.Item label='Dokter' value='Dokter' />
 								<Select.Item label='Dosen/Guru' value='Dosen/Guru' />
 								<Select.Item label='Wartawan' value='Wartawan' />
-								<Select.Item label='Hakim/Jaksa/Pengacara' value='Hakim/Jaksa/Pengacara' />
+								<Select.Item
+									label='Hakim/Jaksa/Pengacara'
+									value='Hakim/Jaksa/Pengacara'
+								/>
 							</Select>
 						)}
 						name='pekerjaan'
@@ -102,7 +124,7 @@ export default function DataPekerjaan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -118,7 +140,7 @@ export default function DataPekerjaan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -134,7 +156,7 @@ export default function DataPekerjaan({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -200,7 +222,7 @@ export default function DataPekerjaan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
@@ -217,7 +239,7 @@ export default function DataPekerjaan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_fax'
@@ -234,7 +256,7 @@ export default function DataPekerjaan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_extension'
@@ -251,7 +273,7 @@ export default function DataPekerjaan({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='email-address'
+								keyboardType='email-address'
 							/>
 						)}
 						name='email'
