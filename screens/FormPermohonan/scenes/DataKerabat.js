@@ -9,19 +9,30 @@ import {
 	VStack,
 } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
+import { useDataKerabat } from '../../../api/form-permohonan';
 
-export default function DataKerabat({ debiturId }) {
+export default function DataKerabat({ debiturId, formPermohonanId }) {
+	const { dataKerabat, postDataKerabat } = useDataKerabat(formPermohonanId);
+
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 		watch,
 	} = useForm({
-		defaultValues: {
-			email: '',
-			name: '',
-			password: '',
-			confirmPassword: '',
+		values: {
+			nama_lengkap: dataKerabat.nama_lengkap,
+			jenis_kelamin: dataKerabat.jenis_kelamin,
+			alamat_ktp: dataKerabat.alamat_ktp?.alamat,
+			alamat_ktp_rt: dataKerabat.alamat_ktp?.rt,
+			alamat_ktp_rw: dataKerabat.alamat_ktp?.rw,
+			alamat_ktp_kota: dataKerabat.alamat_ktp?.kota,
+			alamat_ktp_kelurahan: dataKerabat.alamat_ktp?.kelurahan,
+			alamat_ktp_kecamatan: dataKerabat.alamat_ktp?.kecamatan,
+			alamat_ktp_kode_pos: dataKerabat.alamat_ktp?.kode_pos?.toString(),
+			no_hp: dataKerabat.no_hp,
+			no_telp: dataKerabat.no_telp,
+			hubungan_dengan_pemohon: dataKerabat.hubungan_dengan_pemohon,
 		},
 	});
 
@@ -95,7 +106,7 @@ export default function DataKerabat({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RT'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -111,7 +122,7 @@ export default function DataKerabat({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='RW'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -127,7 +138,7 @@ export default function DataKerabat({ debiturId }) {
 										onChangeText={(val) => onChange(val)}
 										value={value}
 										placeholder='Kode Pos'
-                    keyboardType='numeric'
+										keyboardType='numeric'
 										flex={1}
 									/>
 								)}
@@ -193,7 +204,7 @@ export default function DataKerabat({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_hp'
@@ -210,7 +221,7 @@ export default function DataKerabat({ debiturId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-                keyboardType='phone-pad'
+								keyboardType='phone-pad'
 							/>
 						)}
 						name='no_telp'
