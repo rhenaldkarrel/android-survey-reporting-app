@@ -34,7 +34,10 @@ export default function BuktiDokumen({ debiturId, route }) {
 	const [selectedImage, setSelectedImage] = useState('');
 
 	useEffect(() => {
-		if (!isEmpty(dataBuktiDokumen)) {
+		if (
+			!isEmpty(dataBuktiDokumen) &&
+			dataBuktiDokumen.foto_bukti_dokumen.length > 0
+		) {
 			setPhotos(dataBuktiDokumen.foto_bukti_dokumen);
 		}
 	}, [dataBuktiDokumen]);
@@ -78,7 +81,7 @@ export default function BuktiDokumen({ debiturId, route }) {
 			photos.forEach((photo) => {
 				formData.append('bukti_dokumen', {
 					uri: photo.dokumen,
-					name: `${photo.nama_dokumen}.${getUrlExtension(photo.dokumen)}`,
+					name: photo.nama_dokumen,
 					type: 'image/png',
 				});
 			});
