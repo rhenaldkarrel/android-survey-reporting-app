@@ -11,51 +11,88 @@ import {
 } from 'native-base';
 import { Fragment, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import useAuth from '../hooks/useAuth';
+import { useBuktiDokumen } from '../api/bukti-dokumen';
+import { ToastAndroid } from 'react-native';
+import { getUrlExtension } from '../lib/helpers/getImageExtension';
 
 export default function BuktiDokumen({ debiturId }) {
-	const [photos, setPhotos] = useState([{ title: '', uri: '' }]);
+	const { auth } = useAuth();
+	const { uploadBuktiDokumen } = useBuktiDokumen();
+
+	const [isLoading, setIsLoading] = useState(false);
+	const [photos, setPhotos] = useState([{ nama_dokumen: '', dokumen: '' }]);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedImage, setSelectedImage] = useState('');
 
 	const pickImage = async (index) => {
 		// No permissions request is necessary for launching the image library
 		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
 			quality: 1,
 			allowsMultipleSelection: false,
 		});
 
-		console.log(result);
-
 		if (!result.canceled) {
 			let data = [...photos];
-			data[index]['uri'] = result.assets[0].uri;
+			data[index]['dokumen'] = result.assets[0].uri;
 			setPhotos(data);
 		}
 	};
 
 	const handleFormChange = (text, index) => {
 		let data = [...photos];
-		data[index]['title'] = text;
+		data[index]['nama_dokumen'] = text;
 		setPhotos(data);
 	};
 
 	const addPhotos = () => {
 		let object = {
-			title: '',
-			image: '',
+			nama_dokumen: '',
+			dokumen: '',
 		};
 
 		setPhotos([...photos, object]);
 	};
 
-	const handleSave = () => {
-		console.log(JSON.stringify(photos, null, 2));
+	const onSubmit = async () => {
+		try {
+			setIsLoading(true);
+
+			const formData = new FormData();
+
+			photos.forEach((photo) => {
+				formData.append('bukti_dokumen', {
+					uri: photo.dokumen,
+					name: `${photo.nama_dokumen}.${getUrlExtension(photo.dokumen)}`,
+					type: 'image/png',
+				});
+			});
+
+			const response = await uploadBuktiDokumen({
+				debiturId,
+				surveyorId: auth.userId,
+				dokumen: formData,
+			});
+
+			if (response.success) {
+				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+			} else {
+				throw new Error('Terjadi kesalahan ketika menyimpan data!');
+			}
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	const handleDeleteImage = (index) => {
 		let data = [...photos];
-		data[index]['uri'] = '';
+		data[index]['dokumen'] = '';
 		setPhotos(data);
 	};
 
@@ -74,22 +111,22 @@ export default function BuktiDokumen({ debiturId }) {
 					<FormControl key={index}>
 						<FormControl.Label>Nama Dokumen {index + 1}</FormControl.Label>
 						<Input
-							value={photo.title}
+							value={photo.nama_dokumen}
 							onChangeText={(text) => handleFormChange(text, index)}
 							mb='12px'
-							name='title'
+							name='nama_dokumen'
 						/>
-						{photo.uri ? (
+						{photo.dokumen ? (
 							<Fragment>
 								<AspectRatio ratio={4 / 3}>
 									<Image
-										alt={photo.uri}
-										source={{ uri: photo.uri }}
+										alt={photo.dokumen}
+										source={{ uri: photo.dokumen }}
 										resizeMode='contain'
 									/>
 								</AspectRatio>
 								<HStack space='8px' mt='8px' justifyContent='center'>
-									<Button onPress={() => handlePreviewImage(photo.uri)}>
+									<Button onPress={() => handlePreviewImage(photo.dokumen)}>
 										Lihat
 									</Button>
 									<Button
@@ -107,7 +144,9 @@ export default function BuktiDokumen({ debiturId }) {
 						)}
 					</FormControl>
 				))}
-				<Button onPress={handleSave}>Simpan Data</Button>
+				<Button onPress={onSubmit} isLoading={isLoading}>
+					Simpan Data
+				</Button>
 			</VStack>
 			<Modal isOpen={showModal} onClose={() => setShowModal(false)}>
 				<Modal.Content>
