@@ -21,15 +21,34 @@ export const useBuktiDokumen = (buktiDokumenId) => {
 
 	const uploadBuktiDokumen = async ({ debiturId, surveyorId, dokumen }) => {
 		try {
-			const res = await axios.post('/surveyor/bukti-dokumen/upload/' + buktiDokumenId, dokumen, {
-				headers: {
-					'Content-Type': 'multipart/form-data',
-				},
-				data: {
-					debiturId,
-					surveyorId,
-				},
-			});
+			const res = await axios.post(
+				'/surveyor/bukti-dokumen/upload/' + buktiDokumenId,
+				dokumen,
+				{
+					headers: {
+						'Content-Type': 'multipart/form-data',
+					},
+					data: {
+						debiturId,
+						surveyorId,
+					},
+				}
+			);
+
+			return res.data;
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	const deleteBuktiDokumen = async (dokumenId) => {
+		try {
+			const res = await axios.delete(
+				'/surveyor/bukti-dokumen/' + buktiDokumenId + '/' + dokumenId
+			);
 
 			return res.data;
 		} catch (err) {
@@ -44,5 +63,5 @@ export const useBuktiDokumen = (buktiDokumenId) => {
 		getBuktiDokumen();
 	}, []);
 
-	return { dataBuktiDokumen, uploadBuktiDokumen };
+	return { dataBuktiDokumen, uploadBuktiDokumen, deleteBuktiDokumen };
 };
