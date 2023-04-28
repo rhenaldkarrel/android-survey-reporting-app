@@ -14,13 +14,13 @@ import * as ImagePicker from 'expo-image-picker';
 import useAuth from '../hooks/useAuth';
 import { useBuktiDokumen } from '../api/bukti-dokumen';
 import { ToastAndroid } from 'react-native';
-import { getUrlExtension } from '../lib/helpers/getImageExtension';
 import { isEmpty } from 'lodash';
+import { Alert } from 'react-native';
 
 export default function BuktiDokumen({ debiturId, route }) {
 	const { buktiDokumenId } = route.params;
 	const { auth } = useAuth();
-	const { dataBuktiDokumen, uploadBuktiDokumen } =
+	const { dataBuktiDokumen, uploadBuktiDokumen, deleteBuktiDokumen } =
 		useBuktiDokumen(buktiDokumenId);
 
 	const [isLoading, setIsLoading] = useState(false);
@@ -107,10 +107,46 @@ export default function BuktiDokumen({ debiturId, route }) {
 		}
 	};
 
-	const handleDeleteImage = (index) => {
-		let data = [...photos];
-		data[index]['dokumen'] = '';
-		setPhotos(data);
+	const handleDeleteImage = (index, dokumenId) => {
+		Alert.alert(
+			'Yakin menghapus dokumen ini?',
+			'Aksi ini tidak dapat dibatalkan.',
+			[
+				{
+					text: 'Batal',
+					style: 'cancel',
+				},
+				{
+					text: 'Ya, Hapus',
+					onPress: async () => {
+						try {
+							const res = await deleteBuktiDokumen(dokumenId);
+
+							if (res.success) {
+								let data = [...photos];
+								data[index]['dokumen'] = '';
+								data[index]['nama_dokumen'] = '';
+								setPhotos(data);
+
+								ToastAndroid.show(
+									'Berhasil menghapus dokumen!',
+									ToastAndroid.SHORT
+								);
+							} else {
+								throw new Error('Terjadi kesalahan saat menghapus data!');
+							}
+						} catch (err) {
+							console.log(err);
+							ToastAndroid.show(
+								err.response?.data?.message || err.message || err,
+								ToastAndroid.SHORT
+							);
+						}
+					},
+					style: 'destructive',
+				},
+			]
+		);
 	};
 
 	const handlePreviewImage = (image) => {
@@ -148,7 +184,7 @@ export default function BuktiDokumen({ debiturId, route }) {
 									</Button>
 									<Button
 										colorScheme='red'
-										onPress={() => handleDeleteImage(index)}
+										onPress={() => handleDeleteImage(index, photo._id)}
 									>
 										Hapus
 									</Button>
