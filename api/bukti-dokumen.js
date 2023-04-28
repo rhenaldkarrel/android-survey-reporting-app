@@ -1,8 +1,23 @@
 import { ToastAndroid } from 'react-native';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { useEffect, useState } from 'react';
 
-export const useBuktiDokumen = () => {
+export const useBuktiDokumen = (buktiDokumenId) => {
 	const axios = useAxiosPrivate();
+	const [dataBuktiDokumen, setDataBuktiDokumen] = useState({});
+
+	const getBuktiDokumen = async () => {
+		try {
+			const res = await axios.get('/surveyor/bukti-dokumen/' + buktiDokumenId);
+
+			setDataBuktiDokumen(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
 
 	const uploadBuktiDokumen = async ({ debiturId, surveyorId, dokumen }) => {
 		try {
@@ -18,7 +33,6 @@ export const useBuktiDokumen = () => {
 
 			return res.data;
 		} catch (err) {
-      console.log(JSON.stringify(err, null, 2))
 			ToastAndroid.show(
 				err.response?.data?.message || err.message || err,
 				ToastAndroid.SHORT
@@ -26,5 +40,9 @@ export const useBuktiDokumen = () => {
 		}
 	};
 
-	return { uploadBuktiDokumen };
+	useEffect(() => {
+		getBuktiDokumen();
+	}, []);
+
+	return { dataBuktiDokumen, uploadBuktiDokumen };
 };
