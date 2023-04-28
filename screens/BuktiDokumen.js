@@ -9,21 +9,35 @@ import {
 	ScrollView,
 	VStack,
 } from 'native-base';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import useAuth from '../hooks/useAuth';
 import { useBuktiDokumen } from '../api/bukti-dokumen';
 import { ToastAndroid } from 'react-native';
 import { getUrlExtension } from '../lib/helpers/getImageExtension';
+import { isEmpty } from 'lodash';
 
-export default function BuktiDokumen({ debiturId }) {
+export default function BuktiDokumen({ debiturId, route }) {
+	const { buktiDokumenId } = route.params;
 	const { auth } = useAuth();
-	const { uploadBuktiDokumen } = useBuktiDokumen();
+	const { dataBuktiDokumen, uploadBuktiDokumen } =
+		useBuktiDokumen(buktiDokumenId);
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [photos, setPhotos] = useState([{ nama_dokumen: '', dokumen: '' }]);
+	const [photos, setPhotos] = useState([
+		{
+			nama_dokumen: '',
+			dokumen: '',
+		},
+	]);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedImage, setSelectedImage] = useState('');
+
+	useEffect(() => {
+		if (!isEmpty(dataBuktiDokumen)) {
+			setPhotos(dataBuktiDokumen.foto_bukti_dokumen);
+		}
+	}, [dataBuktiDokumen]);
 
 	const pickImage = async (index) => {
 		// No permissions request is necessary for launching the image library
