@@ -19,6 +19,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 	const { _id: formPengajuanId } = formPengajuanData;
 	const { _id: formPermohonanId } = formPengajuanData.form_permohonan;
 	const { _id: debiturId } = formPengajuanData.user;
+	const { _id: buktiDokumenId } = formPengajuanData.bukti_dokumen;
 
 	const { alamat, rt, rw, kelurahan, kecamatan, kota, kode_pos } =
 		formPengajuanData.alamat_domisili;
@@ -88,6 +89,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 										debiturId,
 										formPengajuanId,
 										formPermohonanId,
+										buktiDokumenId,
 									})
 								}
 							>
