@@ -344,3 +344,27 @@ export const useDataPenjual = (formPermohonanId) => {
 
 	return { dataPenjual, postDataPenjual };
 };
+
+export const useDataSpk = (formSpkId) => {
+	const [dataSpk, setDataSpk] = useState({});
+	const axios = useAxiosPrivate();
+
+	const getDataSpk = async () => {
+		try {
+			const res = await axios.get('/surveyor/form-spk/' + formSpkId);
+
+			setDataSpk(res.data.data);
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
+	useEffect(() => {
+		getDataSpk();
+	}, []);
+
+	return { dataSpk };
+};
