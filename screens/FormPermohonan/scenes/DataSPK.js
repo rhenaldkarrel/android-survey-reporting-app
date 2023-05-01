@@ -13,7 +13,7 @@ import { useDataSpk } from '../../../api/form-permohonan';
 
 export default function DataSPK({ debiturId, formSpkId }) {
 	const [isLoading, setIsLoading] = useState(false);
-	const { dataSpk } = useDataSpk(formSpkId);
+	const { dataSpk, postDataSpk } = useDataSpk(formSpkId);
 
 	const {
 		control,
@@ -35,6 +35,8 @@ export default function DataSPK({ debiturId, formSpkId }) {
 		ToastAndroid.show('Mohon tunggu sebentar...', ToastAndroid.SHORT);
 
 		try {
+			const response = await postDataSpk(data);
+
 			if (response.success) {
 				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
 			} else {
