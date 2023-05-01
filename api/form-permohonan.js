@@ -362,9 +362,15 @@ export const useDataSpk = (formSpkId) => {
 		}
 	};
 
+	const postDataSpk = async (data) => {
+		const res = await axios.post('/surveyor/form-spk/' + formSpkId, data);
+
+		return res.data;
+	};
+
 	useEffect(() => {
 		getDataSpk();
 	}, []);
 
-	return { dataSpk };
+	return { dataSpk, postDataSpk };
 };
