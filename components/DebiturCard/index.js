@@ -17,7 +17,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 	const navigation = useNavigation();
 
 	const { _id: formPengajuanId } = formPengajuanData;
-  const { laporan_kumite: laporanKumiteId } = formPengajuanData
+  const { _id: laporanKumiteId } = formPengajuanData.laporan_kumite;
 	const { _id: formPermohonanId } = formPengajuanData.form_permohonan;
 	const { _id: debiturId } = formPengajuanData.user;
 	const { _id: buktiDokumenId } = formPengajuanData.bukti_dokumen;
