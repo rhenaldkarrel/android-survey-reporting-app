@@ -7,7 +7,8 @@ import { useLaporanKumite } from '../api/laporan-kumite';
 export default function LaporanKumite({ route }) {
 	const { debiturId, laporanKumiteId } = route.params;
 	const [isLoading, setIsLoading] = useState(false);
-	const { dataLaporanKumite } = useLaporanKumite(laporanKumiteId);
+	const { dataLaporanKumite, postLaporanKumite } =
+		useLaporanKumite(laporanKumiteId);
 
 	const {
 		control,
@@ -31,6 +32,13 @@ export default function LaporanKumite({ route }) {
 		ToastAndroid.show('Mohon tunggu sebentar...', ToastAndroid.SHORT);
 
 		try {
+			const response = await postLaporanKumite(data);
+
+			if (response.success) {
+				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+			} else {
+				throw new Error('Terjadi kesalahan ketika menyimpan data!');
+			}
 		} catch (err) {
 			ToastAndroid.show(
 				err.response?.data?.message || err.message || err,
