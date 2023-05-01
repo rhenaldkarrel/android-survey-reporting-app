@@ -7,6 +7,7 @@ import UbahProfile from '../screens/UbahProfile';
 import Map from '../screens/Map';
 import FormPermohonan from '../screens/FormPermohonan';
 import BuktiDokumen from '../screens/BuktiDokumen';
+import LaporanKumite from '../screens/LaporanKumite';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +55,13 @@ export default function AppStack() {
 								title: 'Bukti Dokumen',
 							}}
 							component={BuktiDokumen}
+						/>
+						<Stack.Screen
+							name='LaporanKumite'
+							options={{
+								title: 'Laporan Kumite',
+							}}
+							component={LaporanKumite}
 						/>
 					</>
 				)}

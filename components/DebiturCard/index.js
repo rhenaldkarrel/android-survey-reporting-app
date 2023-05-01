@@ -17,6 +17,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 	const navigation = useNavigation();
 
 	const { _id: formPengajuanId } = formPengajuanData;
+  const { laporan_kumite: laporanKumiteId } = formPengajuanData
 	const { _id: formPermohonanId } = formPengajuanData.form_permohonan;
 	const { _id: debiturId } = formPengajuanData.user;
 	const { _id: buktiDokumenId } = formPengajuanData.bukti_dokumen;
@@ -73,8 +74,9 @@ const DebiturCard = ({ formPengajuanData }) => {
 								flex={1}
 								borderColor='primary.400'
 								onPress={() =>
-									navigation.navigate('FormSurvei', {
+									navigation.navigate('LaporanKumite', {
 										debiturId,
+                    laporanKumiteId,
 									})
 								}
 							>
