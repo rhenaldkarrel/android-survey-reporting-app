@@ -1,14 +1,14 @@
-import { Heading, View, Text, VStack } from 'native-base';
+import { Heading, Text, VStack, View } from 'native-base';
+import React from 'react';
 import {
+	ActivityIndicator,
+	FlatList,
 	StatusBar,
 	ToastAndroid,
-	FlatList,
-	ActivityIndicator,
 } from 'react-native';
 import DebiturCard from '../components/DebiturCard';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import React from 'react';
 import useAuth from '../hooks/useAuth';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 export default function Survei() {
 	const axios = useAxiosPrivate();
@@ -19,7 +19,9 @@ export default function Survei() {
 	React.useEffect(() => {
 		(async () => {
 			try {
-				const res = await axios.get(`/debitur/form-pengajuan/has-surveyor/${auth.userId}`);
+				const res = await axios.get(
+					`/debitur/form-pengajuan/has-surveyor/${auth.userId}`
+				);
 
 				setFormPengajuanData(res.data.data);
 			} catch (err) {
@@ -44,6 +46,7 @@ export default function Survei() {
 							<FlatList
 								data={formPengajuanData}
 								keyExtractor={({ _id }) => _id}
+								ItemSeparatorComponent={<View style={{ height: 16 }} />}
 								renderItem={({ item }) => (
 									<DebiturCard formPengajuanData={item} />
 								)}
