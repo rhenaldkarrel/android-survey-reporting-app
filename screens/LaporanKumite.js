@@ -2,9 +2,12 @@ import { Button, FormControl, ScrollView, TextArea, VStack } from 'native-base';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
+import { useLaporanKumite } from '../api/laporan-kumite';
 
-export default function LaporanKumite({ debiturId, laporanKumiteId }) {
+export default function LaporanKumite({ route }) {
+	const { debiturId, laporanKumiteId } = route.params;
 	const [isLoading, setIsLoading] = useState(false);
+	const { dataLaporanKumite } = useLaporanKumite(laporanKumiteId);
 
 	const {
 		control,
@@ -12,7 +15,14 @@ export default function LaporanKumite({ debiturId, laporanKumiteId }) {
 		formState: { errors },
 		watch,
 	} = useForm({
-		values: {},
+		values: {
+			capacity: dataLaporanKumite.capacity,
+			capital: dataLaporanKumite.capital,
+			character: dataLaporanKumite.character,
+			collateral: dataLaporanKumite.collateral,
+			condition: dataLaporanKumite.condition,
+			purpose: dataLaporanKumite.purpose,
+		},
 	});
 
 	const onSubmit = async (data) => {
