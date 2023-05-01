@@ -9,9 +9,11 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
+import { useDataSpk } from '../../../api/form-permohonan';
 
 export default function DataSPK({ debiturId, formSpkId }) {
 	const [isLoading, setIsLoading] = useState(false);
+	const { dataSpk } = useDataSpk(formSpkId);
 
 	const {
 		control,
@@ -19,7 +21,12 @@ export default function DataSPK({ debiturId, formSpkId }) {
 		formState: { errors },
 		watch,
 	} = useForm({
-		values: {},
+		values: {
+			collateral: dataSpk.collateral?.toString(),
+			condition: dataSpk.condition?.toString(),
+			capacity: dataSpk.capacity?.toString(),
+			capital: dataSpk.capital?.toString(),
+		},
 	});
 
 	const onSubmit = async (data) => {
