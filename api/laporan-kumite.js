@@ -21,9 +21,25 @@ export const useLaporanKumite = (laporanKumiteId) => {
 		}
 	};
 
+	const postLaporanKumite = async (data) => {
+		try {
+			const res = await axios.post(
+				'/surveyor/laporan-kumite/' + laporanKumiteId,
+				data
+			);
+
+			return res.data;
+		} catch (err) {
+			ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+		}
+	};
+
 	useEffect(() => {
 		getLaporanKumite();
 	}, []);
 
-	return { dataLaporanKumite };
+	return { dataLaporanKumite, postLaporanKumite };
 };
