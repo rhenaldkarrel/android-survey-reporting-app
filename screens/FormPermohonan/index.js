@@ -12,13 +12,14 @@ import DataPenjual from './scenes/DataPenjual';
 import InformasiKendaraan from './scenes/InformasiKendaraan';
 import DataPenghasilan from './scenes/DataPenghasilan';
 import StrukturPembiayaan from './scenes/StrukturPembiayaan';
+import DataSPK from './scenes/DataSPK';
 
 const SecondRoute = () => (
 	<ScrollView style={{ flex: 1, backgroundColor: '#673ab7' }} />
 );
 
 const renderScene = ({ route }) => {
-	const { debiturId, formPermohonanId } = route;
+	const { debiturId, formPermohonanId, formSpkId } = route;
 
 	switch (route.key) {
 		case 'dataPemohon':
@@ -91,6 +92,8 @@ const renderScene = ({ route }) => {
 					formPermohonanId={formPermohonanId}
 				/>
 			);
+		case 'dataSPK':
+			return <DataSPK debiturId={debiturId} formSpkId={formSpkId} />;
 		default:
 			return null;
 	}
@@ -104,7 +107,7 @@ const LazyPlaceholder = ({ route }) => (
 );
 
 export default function FormPermohonan({ route }) {
-	const { debiturId, formPermohonanId } = route.params;
+	const { debiturId, formPermohonanId, formSpkId } = route.params;
 	const layout = useWindowDimensions();
 
 	const [index, setIndex] = useState(0);
@@ -168,6 +171,12 @@ export default function FormPermohonan({ route }) {
 			title: 'Data Penjual',
 			debiturId,
 			formPermohonanId,
+		},
+		{
+			key: 'dataSPK',
+			title: 'Data SPK',
+			debiturId,
+			formSpkId,
 		},
 	]);
 

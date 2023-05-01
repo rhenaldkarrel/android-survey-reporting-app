@@ -17,10 +17,11 @@ const DebiturCard = ({ formPengajuanData }) => {
 	const navigation = useNavigation();
 
 	const { _id: formPengajuanId } = formPengajuanData;
-  const { _id: laporanKumiteId } = formPengajuanData.laporan_kumite;
+	const { _id: laporanKumiteId } = formPengajuanData.laporan_kumite;
 	const { _id: formPermohonanId } = formPengajuanData.form_permohonan;
 	const { _id: debiturId } = formPengajuanData.user;
 	const { _id: buktiDokumenId } = formPengajuanData.bukti_dokumen;
+	const { _id: formSpkId } = formPengajuanData.form_spk;
 
 	const { alamat, rt, rw, kelurahan, kecamatan, kota, kode_pos } =
 		formPengajuanData.alamat_domisili;
@@ -62,6 +63,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 									navigation.navigate('FormPermohonan', {
 										formPermohonanId,
 										debiturId,
+										formSpkId,
 									})
 								}
 							>
@@ -76,7 +78,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 								onPress={() =>
 									navigation.navigate('LaporanKumite', {
 										debiturId,
-                    laporanKumiteId,
+										laporanKumiteId,
 									})
 								}
 							>
