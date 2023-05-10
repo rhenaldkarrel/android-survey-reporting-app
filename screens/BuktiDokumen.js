@@ -17,7 +17,7 @@ import { ToastAndroid } from 'react-native';
 import { isEmpty } from 'lodash';
 import { Alert } from 'react-native';
 
-export default function BuktiDokumen({ debiturId, route }) {
+export default function BuktiDokumen({ route }) {
 	const { buktiDokumenId } = route.params;
 	const { auth } = useAuth();
 	const { dataBuktiDokumen, uploadBuktiDokumen, deleteBuktiDokumen } =
@@ -87,8 +87,6 @@ export default function BuktiDokumen({ debiturId, route }) {
 			});
 
 			const response = await uploadBuktiDokumen({
-				debiturId,
-				surveyorId: auth.userId,
 				dokumen: formData,
 			});
 

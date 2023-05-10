@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
 import _ from 'lodash';
 
-export default function DataKerabat({ debiturId, formPermohonanId }) {
+export default function DataKerabat({ formPermohonanId }) {
 	const { dataKerabat, postDataKerabat } = useDataKerabat(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);
 

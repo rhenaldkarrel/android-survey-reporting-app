@@ -13,7 +13,7 @@ import { useDataPenjamin } from '../../../api/form-permohonan';
 import { ToastAndroid } from 'react-native';
 import { useState } from 'react';
 
-export default function DataPenjamin({ debiturId, formPermohonanId }) {
+export default function DataPenjamin({ formPermohonanId }) {
 	const { dataPenjamin, postDataPenjamin } = useDataPenjamin(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);
 

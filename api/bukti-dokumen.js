@@ -19,7 +19,7 @@ export const useBuktiDokumen = (buktiDokumenId) => {
 		}
 	};
 
-	const uploadBuktiDokumen = async ({ debiturId, surveyorId, dokumen }) => {
+	const uploadBuktiDokumen = async ({ dokumen }) => {
 		try {
 			const res = await axios.post(
 				'/surveyor/bukti-dokumen/upload/' + buktiDokumenId,
@@ -27,10 +27,6 @@ export const useBuktiDokumen = (buktiDokumenId) => {
 				{
 					headers: {
 						'Content-Type': 'multipart/form-data',
-					},
-					data: {
-						debiturId,
-						surveyorId,
 					},
 				}
 			);

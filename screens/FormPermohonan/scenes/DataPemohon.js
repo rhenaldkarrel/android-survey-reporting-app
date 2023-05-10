@@ -15,7 +15,7 @@ import {
 } from '../../../api/form-permohonan';
 import { useState } from 'react';
 
-export default function DataPemohon({ debiturId, formPermohonanId }) {
+export default function DataPemohon({ formPermohonanId }) {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const { dataPemohon, postDataPemohon } = useDataPemohon(formPermohonanId);

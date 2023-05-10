@@ -12,7 +12,7 @@ import { useDataKendaraan } from '../../../api/form-permohonan';
 import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
 
-export default function InformasiKendaraan({ debiturId, formPermohonanId }) {
+export default function InformasiKendaraan({ formPermohonanId }) {
 	const { dataKendaraan, postDataKendaraan } =
 		useDataKendaraan(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);

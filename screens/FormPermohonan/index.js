@@ -19,81 +19,31 @@ const SecondRoute = () => (
 );
 
 const renderScene = ({ route }) => {
-	const { debiturId, formPermohonanId, formSpkId } = route;
+	const { formPermohonanId, formSpkId } = route;
 
 	switch (route.key) {
 		case 'dataPemohon':
-			return (
-				<DataPemohon
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataPemohon formPermohonanId={formPermohonanId} />;
 		case 'dataPasangan':
-			return (
-				<DataPasangan
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataPasangan formPermohonanId={formPermohonanId} />;
 		case 'dataPenjamin':
-			return (
-				<DataPenjamin
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataPenjamin formPermohonanId={formPermohonanId} />;
 		case 'dataKerabat':
-			return (
-				<DataKerabat
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataKerabat formPermohonanId={formPermohonanId} />;
 		case 'dataPekerjaan':
-			return (
-				<DataPekerjaan
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataPekerjaan formPermohonanId={formPermohonanId} />;
 		case 'informasiKendaraan':
-			return (
-				<InformasiKendaraan
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <InformasiKendaraan formPermohonanId={formPermohonanId} />;
 		case 'dataPenghasilan':
-			return (
-				<DataPenghasilan
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataPenghasilan formPermohonanId={formPermohonanId} />;
 		case 'dataAsuransi':
-			return (
-				<DataAsuransi
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataAsuransi formPermohonanId={formPermohonanId} />;
 		case 'strukturPembiayaan':
-			return (
-				<StrukturPembiayaan
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <StrukturPembiayaan formPermohonanId={formPermohonanId} />;
 		case 'dataPenjual':
-			return (
-				<DataPenjual
-					debiturId={debiturId}
-					formPermohonanId={formPermohonanId}
-				/>
-			);
+			return <DataPenjual formPermohonanId={formPermohonanId} />;
 		case 'dataSPK':
-			return <DataSPK debiturId={debiturId} formSpkId={formSpkId} />;
+			return <Da formSpkId={formSpkId} />;
 		default:
 			return null;
 	}
@@ -107,7 +57,7 @@ const LazyPlaceholder = ({ route }) => (
 );
 
 export default function FormPermohonan({ route }) {
-	const { debiturId, formPermohonanId, formSpkId } = route.params;
+	const { formPermohonanId, formSpkId } = route.params;
 	const layout = useWindowDimensions();
 
 	const [index, setIndex] = useState(0);
@@ -115,67 +65,56 @@ export default function FormPermohonan({ route }) {
 		{
 			key: 'dataPemohon',
 			title: 'Data Pemohon',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataPasangan',
 			title: 'Data Pasangan',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataPenjamin',
 			title: 'Data Penjamin',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataKerabat',
 			title: 'Data Kerabat',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataPekerjaan',
 			title: 'Data Pekerjaan',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'informasiKendaraan',
 			title: 'Informasi Kendaraan',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataPenghasilan',
 			title: 'Data Penghasilan',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataAsuransi',
 			title: 'Data Asuransi',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'strukturPembiayaan',
 			title: 'Struktur Pembiayaan',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataPenjual',
 			title: 'Data Penjual',
-			debiturId,
 			formPermohonanId,
 		},
 		{
 			key: 'dataSPK',
 			title: 'Data SPK',
-			debiturId,
 			formSpkId,
 		},
 	]);

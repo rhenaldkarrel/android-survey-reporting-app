@@ -5,7 +5,7 @@ import { ToastAndroid } from 'react-native';
 import { useLaporanKumite } from '../api/laporan-kumite';
 
 export default function LaporanKumite({ route }) {
-	const { debiturId, laporanKumiteId } = route.params;
+	const { laporanKumiteId } = route.params;
 	const [isLoading, setIsLoading] = useState(false);
 	const { dataLaporanKumite, postLaporanKumite } =
 		useLaporanKumite(laporanKumiteId);

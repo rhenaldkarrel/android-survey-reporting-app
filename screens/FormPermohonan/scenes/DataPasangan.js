@@ -14,7 +14,7 @@ import { ToastAndroid } from 'react-native';
 import { useState } from 'react';
 import _ from 'lodash';
 
-export default function DataPasangan({ debiturId, formPermohonanId }) {
+export default function DataPasangan({ formPermohonanId }) {
 	const { dataPasangan, postDataPasangan } = useDataPasangan(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);
 

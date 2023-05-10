@@ -13,7 +13,7 @@ import { useDataAsuransi } from '../../../api/form-permohonan';
 import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
 
-export default function DataAsuransi({ debiturId, formPermohonanId }) {
+export default function DataAsuransi({ formPermohonanId }) {
 	const { dataAsuransi, postDataAsuransi } = useDataAsuransi(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);
 

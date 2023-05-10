@@ -12,7 +12,7 @@ import { useDataPenghasilan } from '../../../api/form-permohonan';
 import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
 
-export default function DataPenghasilan({ debiturId, formPermohonanId }) {
+export default function DataPenghasilan({ formPermohonanId }) {
 	const { dataPenghasilan, postDataPenghasilan } =
 		useDataPenghasilan(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);

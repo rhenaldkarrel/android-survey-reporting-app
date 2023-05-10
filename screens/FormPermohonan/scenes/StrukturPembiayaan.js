@@ -14,7 +14,7 @@ import { useDataStrukturPembiayaan } from '../../../api/form-permohonan';
 import { ToastAndroid } from 'react-native';
 import { useState } from 'react';
 
-export default function StrukturPembiayaan({ debiturId, formPermohonanId }) {
+export default function StrukturPembiayaan({ formPermohonanId }) {
 	const { dataStrukturPembiayaan, postDataStrukturPembiayaan } =
 		useDataStrukturPembiayaan(formPermohonanId);
 	const [isLoading, setIsLoading] = useState(false);

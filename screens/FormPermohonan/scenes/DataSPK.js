@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { ToastAndroid } from 'react-native';
 import { useDataSpk } from '../../../api/form-permohonan';
 
-export default function DataSPK({ debiturId, formSpkId }) {
+export default function DataSPK({ formSpkId }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const { dataSpk, postDataSpk } = useDataSpk(formSpkId);
 
