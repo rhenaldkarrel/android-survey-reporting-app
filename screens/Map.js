@@ -3,7 +3,7 @@ import MapView, { Marker } from 'react-native-maps';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { regionFrom } from '../lib/helpers/regionFrom';
-import { Box, Button, Heading, Text, VStack } from 'native-base';
+import { Box, Button, HStack, Heading, Text, VStack } from 'native-base';
 import { createOpenLink } from 'react-native-open-maps';
 import * as Location from 'expo-location';
 
@@ -23,6 +23,7 @@ export default function Map({ navigation, route }) {
 		longitudeDelta: 2,
 	});
 	const [message, setMessage] = React.useState('');
+	const [isMinimized, setIsMinimized] = React.useState(false);
 
 	const isLocationEmpty =
 		myLocation.latitude === 0 || myLocation.longitude === 0;
@@ -80,50 +81,62 @@ export default function Map({ navigation, route }) {
 				/>
 			</MapView>
 			<Box position='absolute' bottom={0} left={0} right={0} margin={4}>
-				<Box marginBottom={4} display='flex' alignSelf='flex-start'>
+				<HStack marginBottom={4} space={2}>
 					<TouchableOpacity
 						onPress={() => navigation.goBack()}
 						style={styles.arrowBack}
 					>
 						<MaterialIcons name='arrow-back' color='#000' size={32} />
 					</TouchableOpacity>
-				</Box>
-				<VStack space={4} bg='white' padding={4} borderRadius={12} shadow={2}>
-					<Box>
-						<Heading fontSize={18}>Pencocokkan Lokasi</Heading>
-					</Box>
-					<Box>
-						<Heading fontSize={14} fontWeight='normal'>
-							Lokasi Anda Sekarang
-						</Heading>
-						<Text Text fontWeight='bold' fontSize={18}>
-							{!isLocationEmpty
-								? `${myLocation.latitude}, ${myLocation.longitude}`
-								: message}
-						</Text>
-					</Box>
-					<Box>
-						<Heading fontSize={14} fontWeight='normal'>
-							Lokasi Debitur/Tempat Survei
-						</Heading>
-						<Text Text fontWeight='bold' fontSize={18}>
-							8.123124 meter
-						</Text>
-					</Box>
-					<Box>
-						<Heading fontSize={14} fontWeight='normal'>
-							Perkiraan Jarak ke Lokasi Debitur
-						</Heading>
-						<Text Text fontWeight='bold' fontSize={18}>
-							8.123124 meter
-						</Text>
-					</Box>
-					<Box>
-						<Button bg='primary.400' onPress={openGoogleMapsNavigation}>
-							Buka Navigasi di Map
-						</Button>
-					</Box>
-				</VStack>
+					<TouchableOpacity
+						onPress={() => setIsMinimized(!isMinimized)}
+						style={styles.arrowBack}
+					>
+						<MaterialIcons
+							name={isMinimized ? 'maximize' : 'minimize'}
+							color='#000'
+							size={32}
+						/>
+					</TouchableOpacity>
+				</HStack>
+				{!isMinimized && (
+					<VStack space={4} bg='white' padding={4} borderRadius={12} shadow={2}>
+						<Box>
+							<Heading fontSize={18}>Pencocokkan Lokasi</Heading>
+						</Box>
+						<Box>
+							<Heading fontSize={14} fontWeight='normal'>
+								Lokasi Anda Sekarang
+							</Heading>
+							<Text Text fontWeight='bold' fontSize={18}>
+								{!isLocationEmpty
+									? `${myLocation.latitude}, ${myLocation.longitude}`
+									: message}
+							</Text>
+						</Box>
+						<Box>
+							<Heading fontSize={14} fontWeight='normal'>
+								Lokasi Debitur/Tempat Survei
+							</Heading>
+							<Text Text fontWeight='bold' fontSize={18}>
+								8.123124 meter
+							</Text>
+						</Box>
+						<Box>
+							<Heading fontSize={14} fontWeight='normal'>
+								Perkiraan Jarak ke Lokasi Debitur
+							</Heading>
+							<Text Text fontWeight='bold' fontSize={18}>
+								8.123124 meter
+							</Text>
+						</Box>
+						<Box>
+							<Button bg='primary.400' onPress={openGoogleMapsNavigation}>
+								Buka Navigasi di Map
+							</Button>
+						</Box>
+					</VStack>
+				)}
 			</Box>
 		</View>
 	);
