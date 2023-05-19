@@ -6,27 +6,25 @@ import { regionFrom } from '../lib/helpers/regionFrom';
 import { Box, Button, HStack, Heading, Text, VStack } from 'native-base';
 import { createOpenLink } from 'react-native-open-maps';
 import * as Location from 'expo-location';
+import { isEmpty } from 'lodash';
+import { haversineDistance } from '../lib/helpers/haversineDistance';
 
 export default function Map({ navigation, route }) {
 	const { koordinat_lokasi } = route.params;
 	const debiturLocation = regionFrom(
-		koordinat_lokasi.latitude,
-		koordinat_lokasi.longitude,
+		koordinat_lokasi?.latitude,
+		koordinat_lokasi?.longitude,
 		2
 	);
 
 	const map = React.useRef();
-	const [myLocation, setMyLocation] = React.useState({
-		latitude: 0,
-		longitude: 0,
-		latitudeDelta: 2,
-		longitudeDelta: 2,
-	});
+	const [myLocation, setMyLocation] = React.useState(null);
 	const [message, setMessage] = React.useState('');
 	const [isMinimized, setIsMinimized] = React.useState(false);
+	const [haversineResult, setHaversineResult] = React.useState(0);
 
 	const isLocationEmpty =
-		myLocation.latitude === 0 || myLocation.longitude === 0;
+		myLocation?.latitude === 0 || myLocation?.longitude === 0;
 
 	React.useEffect(() => {
 		(async () => {
@@ -59,8 +57,34 @@ export default function Map({ navigation, route }) {
 		})();
 	}, []);
 
+	React.useEffect(() => {
+		let interval;
+
+		if (!isEmpty(myLocation) && !isEmpty(koordinat_lokasi)) {
+			const baseLocation = {
+				latitude: myLocation?.latitude,
+				longitude: myLocation?.longitude,
+			};
+
+			const targetLocation = {
+				latitude: koordinat_lokasi?.latitude,
+				longitude: koordinat_lokasi?.longitude,
+			};
+
+			interval = setInterval(() => {
+				const haversineResult = haversineDistance(baseLocation, targetLocation);
+
+				setHaversineResult(haversineResult);
+			}, 1000);
+		}
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, [myLocation, koordinat_lokasi]);
+
 	const openGoogleMapsNavigation = createOpenLink({
-		start: `${myLocation.latitude}, ${myLocation.longitude}`,
+		start: `${myLocation?.latitude}, ${myLocation?.longitude}`,
 		end: 'SMPN 244 Jakarta',
 		provider: 'google',
 	});
@@ -110,16 +134,10 @@ export default function Map({ navigation, route }) {
 							</Heading>
 							<Text Text fontWeight='bold' fontSize={18}>
 								{!isLocationEmpty
-									? `${myLocation.latitude}, ${myLocation.longitude}`
+									? `${myLocation?.latitude ?? 0}, ${
+											myLocation?.longitude ?? 0
+									  }`
 									: message}
-							</Text>
-						</Box>
-						<Box>
-							<Heading fontSize={14} fontWeight='normal'>
-								Lokasi Debitur/Tempat Survei
-							</Heading>
-							<Text Text fontWeight='bold' fontSize={18}>
-								8.123124 meter
 							</Text>
 						</Box>
 						<Box>
@@ -127,7 +145,8 @@ export default function Map({ navigation, route }) {
 								Perkiraan Jarak ke Lokasi Debitur
 							</Heading>
 							<Text Text fontWeight='bold' fontSize={18}>
-								8.123124 meter
+								{haversineResult.toFixed(2)} meters /{' '}
+								{(haversineResult / 1000).toFixed(2)} kilometers
 							</Text>
 						</Box>
 						<Box>
