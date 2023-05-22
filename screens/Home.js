@@ -10,9 +10,11 @@ import {
 } from 'native-base';
 import useAuth from '../hooks/useAuth';
 import { StatusBar } from 'react-native';
+import { useStatistics } from '../api/statistik';
 
 export default function Home({ navigation }) {
 	const { auth } = useAuth();
+	const { data } = useStatistics();
 
 	return (
 		<ScrollView marginTop={StatusBar.currentHeight}>
@@ -37,21 +39,23 @@ export default function Home({ navigation }) {
 					<HStack space='8px' display='flex'>
 						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
 							<Text>Total Survey Aktif</Text>
-							<Text fontSize='48px'>15</Text>
+							<Text fontSize='48px'>
+								{data.totalActiveSurveys?.toString() ?? 0}
+							</Text>
 						</Box>
 						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
-							<Text>Total Survey Sedang Diisi</Text>
-							<Text fontSize='48px'>15</Text>
+							<Text>Total Survey Dibatalkan</Text>
+							<Text fontSize='48px'>
+								{data.totalCanceledSurveys?.toString() ?? 0}
+							</Text>
 						</Box>
 					</HStack>
 					<HStack space='8px' display='flex'>
 						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
 							<Text>Total Survey Selesai</Text>
-							<Text fontSize='48px'>15</Text>
-						</Box>
-						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
-							<Text>Total Survey Dibatalkan</Text>
-							<Text fontSize='48px'>15</Text>
+							<Text fontSize='48px'>
+								{data.totalFinishedSurveys?.toString() ?? 0}
+							</Text>
 						</Box>
 					</HStack>
 				</VStack>
@@ -63,22 +67,16 @@ export default function Home({ navigation }) {
 				<VStack space='8px'>
 					<HStack space='8px' display='flex'>
 						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
-							<Text>Total Debitur</Text>
-							<Text fontSize='48px'>15</Text>
+							<Text>Total Debitur Aktif</Text>
+							<Text fontSize='48px'>
+								{data.totalActiveDebiturs?.toString() ?? 0}
+							</Text>
 						</Box>
 						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
 							<Text>Total Pencairan</Text>
-							<Text fontSize='48px'>15</Text>
-						</Box>
-					</HStack>
-					<HStack space='8px' display='flex'>
-						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
-							<Text>Total Debitur Bulan Ini</Text>
-							<Text fontSize='48px'>15</Text>
-						</Box>
-						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
-							<Text>Total Pencairan Bulan Ini</Text>
-							<Text fontSize='48px'>15</Text>
+							<Text fontSize='48px'>
+								{data.totalDisbursement?.toString() ?? 0}
+							</Text>
 						</Box>
 					</HStack>
 				</VStack>
