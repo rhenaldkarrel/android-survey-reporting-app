@@ -7,14 +7,18 @@ import {
 	HStack,
 	Button,
 	VStack,
+	useDisclose,
+	Actionsheet,
 } from 'native-base';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { STATUS_SURVEI } from '../../lib/constants';
 import { TouchableOpacity, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const DebiturCard = ({ formPengajuanData }) => {
 	const navigation = useNavigation();
+	const { isOpen, onOpen, onClose } = useDisclose();
 
 	const { _id: formPengajuanId } = formPengajuanData;
 	const { _id: laporanKumiteId } = formPengajuanData.laporan_kumite;
@@ -122,15 +126,21 @@ const DebiturCard = ({ formPengajuanData }) => {
 					<Text>{`${alamat}, RT/RW ${rt}/${rw}, ${kelurahan}, ${kecamatan}, ${kota} ${kode_pos}`}</Text>
 				</Box>
 				<TouchableOpacity>
-					<MaterialIcons
+					<MaterialCommunityIcons
 						style={{ padding: 4, borderRadius: 8 }}
-						name='edit'
+						name='dots-vertical'
 						size={18}
+						onPress={onOpen}
 					/>
 				</TouchableOpacity>
 			</HStack>
 			<Divider my='8px' />
 			{RenderButtons()}
+			<Actionsheet isOpen={isOpen} onClose={onClose}>
+				<Actionsheet.Content>
+					<Actionsheet.Item>Kirim</Actionsheet.Item>
+				</Actionsheet.Content>
+			</Actionsheet>
 		</Box>
 	);
 };
