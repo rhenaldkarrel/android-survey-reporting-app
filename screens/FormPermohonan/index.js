@@ -43,7 +43,7 @@ const renderScene = ({ route }) => {
 		case 'dataPenjual':
 			return <DataPenjual formPermohonanId={formPermohonanId} />;
 		case 'dataSPK':
-			return <Da formSpkId={formSpkId} />;
+			return <DataSPK formSpkId={formSpkId} />;
 		default:
 			return null;
 	}
