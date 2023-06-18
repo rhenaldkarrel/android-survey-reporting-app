@@ -85,7 +85,7 @@ export default function Map({ navigation, route }) {
 
 	const openGoogleMapsNavigation = createOpenLink({
 		start: `${myLocation?.latitude}, ${myLocation?.longitude}`,
-		end: 'SMPN 244 Jakarta',
+		end: `${debiturLocation?.latitude}, ${debiturLocation?.longitude}`,
 		provider: 'google',
 	});
 
