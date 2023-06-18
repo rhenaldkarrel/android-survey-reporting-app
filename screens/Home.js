@@ -1,7 +1,5 @@
 import {
 	Box,
-	Button,
-	Divider,
 	HStack,
 	Heading,
 	ScrollView,

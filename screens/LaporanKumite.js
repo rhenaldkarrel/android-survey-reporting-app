@@ -13,8 +13,6 @@ export default function LaporanKumite({ route }) {
 	const {
 		control,
 		handleSubmit,
-		formState: { errors },
-		watch,
 	} = useForm({
 		values: {
 			capacity: dataLaporanKumite.capacity,

@@ -14,10 +14,6 @@ import DataPenghasilan from './scenes/DataPenghasilan';
 import StrukturPembiayaan from './scenes/StrukturPembiayaan';
 import DataSPK from './scenes/DataSPK';
 
-const SecondRoute = () => (
-	<ScrollView style={{ flex: 1, backgroundColor: '#673ab7' }} />
-);
-
 const renderScene = ({ route }) => {
 	const { formPermohonanId, formSpkId } = route;
 
