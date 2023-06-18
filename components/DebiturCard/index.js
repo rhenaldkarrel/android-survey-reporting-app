@@ -69,7 +69,7 @@ const DebiturCard = ({ formPengajuanData }) => {
 									})
 								}
 							>
-								Form Permohonan
+								Form Kelengkapan Data
 							</Button>
 						</HStack>
 						<HStack space='8px'>

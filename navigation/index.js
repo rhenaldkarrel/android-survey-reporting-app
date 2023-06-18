@@ -45,7 +45,7 @@ export default function AppStack() {
 						<Stack.Screen
 							name='FormPermohonan'
 							options={{
-								title: 'Pengisian Form Permohonan',
+								title: 'Pengisian Form Kelengkapan Data',
 							}}
 							component={FormPermohonan}
 						/>
