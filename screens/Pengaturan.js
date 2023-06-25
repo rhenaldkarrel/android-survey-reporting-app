@@ -44,16 +44,6 @@ export default function Pengaturan({ navigation }) {
               <Text>Ubah Profile</Text>
             </HStack>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <HStack
-              space="4px"
-              borderBottomWidth="0.5px"
-              borderBottomColor="warmGray.400"
-              py="12px">
-              <Icon name="md-help-circle" size={18} />
-              <Text>Bantuan</Text>
-            </HStack>
-          </TouchableOpacity>
           <TouchableOpacity onPress={handleLogout}>
             <HStack
               space="4px"
