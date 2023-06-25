@@ -45,10 +45,13 @@ export default function Map({ navigation, route }) {
 				const allCoords = [myLocation, debiturLocation];
 
 				setMyLocation(myLocation);
-				map.current.fitToCoordinates(allCoords, {
-					edgePadding: { top: 40, right: 40, bottom: 40, left: 40 },
-					animated: true,
-				});
+				requestAnimationFrame(() =>
+					map.current.fitToCoordinates(allCoords, {
+						edgePadding: { top: 40, right: 40, bottom: 40, left: 40 },
+						animated: true,
+					})
+				);
+        setIsMinimized(true);
 			} catch (err) {
 				setMessage(err.message);
 			} finally {
