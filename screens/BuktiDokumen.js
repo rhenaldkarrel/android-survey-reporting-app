@@ -14,22 +14,23 @@ import * as ImagePicker from 'expo-image-picker';
 import useAuth from '../hooks/useAuth';
 import { useBuktiDokumen } from '../api/bukti-dokumen';
 import { ToastAndroid } from 'react-native';
-import { isEmpty } from 'lodash';
+import _, { isEmpty } from 'lodash';
 import { Alert } from 'react-native';
+
+const defaultPhotos = [
+	{
+		nama_dokumen: '',
+		dokumen: '',
+	},
+];
 
 export default function BuktiDokumen({ route }) {
 	const { buktiDokumenId } = route.params;
-	const { auth } = useAuth();
 	const { dataBuktiDokumen, uploadBuktiDokumen, deleteBuktiDokumen } =
 		useBuktiDokumen(buktiDokumenId);
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [photos, setPhotos] = useState([
-		{
-			nama_dokumen: '',
-			dokumen: '',
-		},
-	]);
+	const [photos, setPhotos] = useState(defaultPhotos);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedImage, setSelectedImage] = useState('');
 
@@ -73,6 +74,13 @@ export default function BuktiDokumen({ route }) {
 	};
 
 	const onSubmit = async () => {
+    const isPhotosEmpty = _.isEqual(photos, defaultPhotos);
+
+    if (isPhotosEmpty) {
+      ToastAndroid.show('Tolong unggah bukti dokumen dengan benar!', ToastAndroid.SHORT);
+      return
+    }
+
 		try {
 			setIsLoading(true);
 
