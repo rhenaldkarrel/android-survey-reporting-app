@@ -11,11 +11,9 @@ import {
 } from 'native-base';
 import { Fragment, useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import useAuth from '../hooks/useAuth';
 import { useBuktiDokumen } from '../api/bukti-dokumen';
-import { ToastAndroid } from 'react-native';
+import { ToastAndroid, Alert } from 'react-native';
 import _, { isEmpty } from 'lodash';
-import { Alert } from 'react-native';
 
 const defaultPhotos = [
 	{
@@ -74,11 +72,11 @@ export default function BuktiDokumen({ route }) {
 	};
 
 	const onSubmit = async () => {
-    const isPhotosEmpty = _.isEqual(photos, defaultPhotos);
+    const hasEmptyField = photos.some(p => p.nama_dokumen === '' || p.dokumen === '');
 
-    if (isPhotosEmpty) {
-      ToastAndroid.show('Tolong unggah bukti dokumen dengan benar!', ToastAndroid.SHORT);
-      return
+    if (hasEmptyField) {
+      ToastAndroid.show('Nama/gambar dokumen tidak boleh kosong!', ToastAndroid.SHORT);
+      return;
     }
 
 		try {
@@ -100,6 +98,8 @@ export default function BuktiDokumen({ route }) {
 
 			if (response.success) {
 				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
+
+        setPhotos(response.data.foto_bukti_dokumen);
 			} else {
 				throw new Error('Terjadi kesalahan ketika menyimpan data!');
 			}
@@ -114,6 +114,16 @@ export default function BuktiDokumen({ route }) {
 	};
 
 	const handleDeleteImage = (index, dokumenId) => {
+    let data = [...photos];
+    const isHostedUrl = data[index]['dokumen'].includes('https');
+
+    if (!isHostedUrl) {
+      let data = [...photos];
+      data[index]['dokumen'] = '';
+      setPhotos(data);
+      return;
+    }
+
 		Alert.alert(
 			'Yakin menghapus dokumen ini?',
 			'Aksi ini tidak dapat dibatalkan.',
