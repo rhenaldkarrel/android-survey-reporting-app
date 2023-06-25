@@ -72,12 +72,17 @@ export default function BuktiDokumen({ route }) {
 	};
 
 	const onSubmit = async () => {
-    const hasEmptyField = photos.some(p => p.nama_dokumen === '' || p.dokumen === '');
+		const hasEmptyField = photos.some(
+			(p) => p.nama_dokumen === '' || p.dokumen === ''
+		);
 
-    if (hasEmptyField) {
-      ToastAndroid.show('Nama/gambar dokumen tidak boleh kosong!', ToastAndroid.SHORT);
-      return;
-    }
+		if (hasEmptyField) {
+			ToastAndroid.show(
+				'Nama/gambar dokumen tidak boleh kosong!',
+				ToastAndroid.SHORT
+			);
+			return;
+		}
 
 		try {
 			setIsLoading(true);
@@ -99,7 +104,7 @@ export default function BuktiDokumen({ route }) {
 			if (response.success) {
 				ToastAndroid.show('Berhasil menyimpan data!', ToastAndroid.SHORT);
 
-        setPhotos(response.data.foto_bukti_dokumen);
+				setPhotos(response.data.foto_bukti_dokumen);
 			} else {
 				throw new Error('Terjadi kesalahan ketika menyimpan data!');
 			}
@@ -114,15 +119,15 @@ export default function BuktiDokumen({ route }) {
 	};
 
 	const handleDeleteImage = (index, dokumenId) => {
-    let data = [...photos];
-    const isHostedUrl = data[index]['dokumen'].includes('https');
+		let data = [...photos];
+		const isHostedUrl = data[index]['dokumen'].includes('https');
 
-    if (!isHostedUrl) {
-      let data = [...photos];
-      data[index]['dokumen'] = '';
-      setPhotos(data);
-      return;
-    }
+		if (!isHostedUrl) {
+			let data = [...photos];
+			data[index]['dokumen'] = '';
+			setPhotos(data);
+			return;
+		}
 
 		Alert.alert(
 			'Yakin menghapus dokumen ini?',
@@ -216,6 +221,14 @@ export default function BuktiDokumen({ route }) {
 				<Button onPress={onSubmit} isLoading={isLoading}>
 					Simpan Data
 				</Button>
+				{photos.length > 1 && (
+					<Button
+						onPress={() => setPhotos(photos.splice(-1))}
+						colorScheme='red'
+					>
+						Batal Tambah Dokumen
+					</Button>
+				)}
 			</VStack>
 			<Modal isOpen={showModal} onClose={() => setShowModal(false)}>
 				<Modal.Content>
