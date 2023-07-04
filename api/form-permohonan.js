@@ -2,6 +2,21 @@ import { useEffect, useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { ToastAndroid } from 'react-native';
 
+export const useDataPermohonan = () => {
+	const axios = useAxiosPrivate();
+
+	const updateStatus = async (formPermohonanId, formPengajuanId, status) => {
+		const res = await axios.put(
+			`/surveyor/form-permohonan/update-status/${formPermohonanId}`,
+			{ status, formPengajuanId }
+		);
+
+		return res.data;
+	};
+
+	return { updateStatus };
+};
+
 export const useDataPemohon = (formPermohonanId) => {
 	const [dataPemohon, setDataPemohon] = useState({});
 	const axios = useAxiosPrivate();
