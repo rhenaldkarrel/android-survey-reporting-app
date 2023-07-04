@@ -13,10 +13,12 @@ import {
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { STATUS_SURVEI } from '../../lib/constants';
-import { TouchableOpacity, Linking } from 'react-native';
+import { TouchableOpacity, Linking, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AlertAsync from 'react-native-alert-async';
+import { useDataPermohonan } from '../../api/form-permohonan';
 
-const DebiturCard = ({ formPengajuanData }) => {
+const DebiturCard = ({ formPengajuanData, onRefresh }) => {
 	const navigation = useNavigation();
 	const { isOpen, onOpen, onClose } = useDisclose();
 
@@ -26,13 +28,45 @@ const DebiturCard = ({ formPengajuanData }) => {
 	const { _id: buktiDokumenId } = formPengajuanData.bukti_dokumen;
 	const { _id: formSpkId } = formPengajuanData.form_spk;
 
+	const { updateStatus } = useDataPermohonan();
+
 	const { alamat, rt, rw, kelurahan, kecamatan, kota, kode_pos } =
 		formPengajuanData.alamat_domisili;
 	const { koordinat_lokasi } = formPengajuanData.alamat_domisili;
 
+	const handleKirim = async () => {
+		const choice = await AlertAsync(
+			'Apakah pengisian data sudah lengkap?',
+			'Anda masih dapat mengubah data apabila masih ada perubahan.',
+			[
+        { text: 'Batal', onPress: () => Promise.resolve('no') },
+				{ text: 'Ya, Kirim', onPress: () => 'yes' },
+			],
+			{
+				cancelable: true,
+				onDismiss: () => 'no',
+			}
+		);
+
+		if (choice === 'yes') {
+			try {
+        const res = await updateStatus(formPermohonanId, formPengajuanId, 'selesai_survei');
+
+				ToastAndroid.show(res.message, ToastAndroid.SHORT);
+
+        onClose();
+
+        onRefresh();
+			} catch (err) {
+				ToastAndroid.show(err, ToastAndroid.SHORT);
+			}
+		}
+	};
+
 	const RenderButtons = () => {
 		switch (formPengajuanData.status) {
 			case STATUS_SURVEI.siap_survei:
+			case STATUS_SURVEI.selesai_survei:
 				return (
 					<VStack space='8px'>
 						<HStack space='8px'>
@@ -100,18 +134,17 @@ const DebiturCard = ({ formPengajuanData }) => {
 								Bukti Dokumen
 							</Button>
 						</HStack>
+						{formPengajuanData.status === STATUS_SURVEI.selesai_survei && (
+							<Button
+								leftIcon={<MaterialIcons name='description' color='#82c24b' />}
+								flex={1}
+								variant='outline'
+								disabled
+							>
+								Form Survei Telah Dikirim
+							</Button>
+						)}
 					</VStack>
-				);
-			case STATUS_SURVEI.selesai_survei:
-				return (
-					<Button
-						leftIcon={<MaterialIcons name='description' color='#82c24b' />}
-						flex={1}
-						variant='outline'
-						disabled
-					>
-						Form Survei Telah Dikirim
-					</Button>
 				);
 		}
 	};
@@ -138,7 +171,9 @@ const DebiturCard = ({ formPengajuanData }) => {
 			{RenderButtons()}
 			<Actionsheet isOpen={isOpen} onClose={onClose}>
 				<Actionsheet.Content>
-					<Actionsheet.Item>Kirim</Actionsheet.Item>
+					<Actionsheet.Item onPress={() => handleKirim()}>
+						Kirim
+					</Actionsheet.Item>
 				</Actionsheet.Content>
 			</Actionsheet>
 		</Box>
