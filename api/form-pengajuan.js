@@ -24,5 +24,5 @@ export const useDataPengajuan = () => {
 		getAssignedDataPengajuan();
 	}, []);
 
-	return { dataPengajuan };
+	return { dataPengajuan, getAssignedDataPengajuan };
 }
