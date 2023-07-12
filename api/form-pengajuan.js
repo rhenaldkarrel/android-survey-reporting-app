@@ -8,10 +8,15 @@ export const useDataPengajuan = () => {
 	const [dataPengajuan, setDataPengajuan] = useState({});
 	const axios = useAxiosPrivate();
 
-	const getAssignedDataPengajuan = async () => {
+	const getAssignedDataPengajuan = async (status = '') => {
 		try {
 			const res = await axios.get(
-				`/debitur/form-pengajuan/has-surveyor/${auth.userId}`
+				`/debitur/form-pengajuan/has-surveyor/${auth.userId}`,
+        {
+          params: {
+            status,
+          }
+        }
 			);
 
 			setDataPengajuan(res.data.data);
