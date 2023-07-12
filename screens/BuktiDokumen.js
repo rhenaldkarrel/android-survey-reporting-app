@@ -14,6 +14,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useBuktiDokumen } from '../api/bukti-dokumen';
 import { ToastAndroid, Alert } from 'react-native';
 import _, { isEmpty } from 'lodash';
+import AlertAsync from 'react-native-alert-async';
 
 const defaultPhotos = [
 	{
@@ -42,11 +43,66 @@ export default function BuktiDokumen({ route }) {
 	}, [dataBuktiDokumen]);
 
 	const pickImage = async (index) => {
-		// No permissions request is necessary for launching the image library
+		// Prompt the user to choose the upload source
+		const source = await promptUploadSource();
+
+		if (source === 'camera') {
+			// Upload from camera
+			takePhoto(index);
+		} else if (source === 'gallery') {
+			// Upload from gallery
+			chooseFromGallery(index);
+		}
+	};
+
+	const promptUploadSource = async () => {
+		try {
+      const selected = await AlertAsync(
+        'Pilih sumber gambar',
+        'Silahkan pilih sumber pengunggahan gambar:',
+        [
+          { text: 'Batal', onPress: () => null },
+          { text: 'Kamera', onPress: () => 'camera' },
+          { text: 'Galeri', onPress: () => 'gallery' },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+
+      return selected;
+    } catch (err) {
+      ToastAndroid.show(
+				err.response?.data?.message || err.message || err,
+				ToastAndroid.SHORT
+			);
+    }
+	};
+
+	const chooseFromGallery = async (index) => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.Images,
 			quality: 1,
 			allowsMultipleSelection: false,
+		});
+
+		if (!result.canceled) {
+			let data = [...photos];
+			data[index]['dokumen'] = result.assets[0].uri;
+			setPhotos(data);
+		}
+	};
+
+	const takePhoto = async (index) => {
+		const { status } = await ImagePicker.requestCameraPermissionsAsync();
+		if (status !== 'granted') {
+			console.log('Camera permission denied');
+			return;
+		}
+
+		let result = await ImagePicker.launchCameraAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			quality: 1,
 		});
 
 		if (!result.canceled) {
@@ -221,7 +277,7 @@ export default function BuktiDokumen({ route }) {
 				<Button onPress={onSubmit} isLoading={isLoading}>
 					Simpan Data
 				</Button>
-				{photos.length > 1 && (
+				{photos.length > 1 && !photos.some(photo => photo.dokumen.includes('https')) && (
 					<Button
 						onPress={() => setPhotos(photos.splice(-1))}
 						colorScheme='red'
