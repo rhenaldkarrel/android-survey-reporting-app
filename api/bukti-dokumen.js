@@ -57,7 +57,7 @@ export const useBuktiDokumen = (buktiDokumenId) => {
 
 	useEffect(() => {
 		getBuktiDokumen();
-	}, []);
+	}, [buktiDokumenId]);
 
 	return { dataBuktiDokumen, uploadBuktiDokumen, deleteBuktiDokumen };
 };
