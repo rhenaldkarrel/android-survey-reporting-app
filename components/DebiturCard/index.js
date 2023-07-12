@@ -136,12 +136,12 @@ const DebiturCard = ({ formPengajuanData, onRefresh }) => {
 						</HStack>
 						{formPengajuanData.status === STATUS_SURVEI.selesai_survei && (
 							<Button
-								leftIcon={<MaterialIcons name='description' color='#82c24b' />}
+								leftIcon={<MaterialIcons size={12} name='description' color='#82c24b' />}
 								flex={1}
 								variant='outline'
 								disabled
 							>
-								Form Survei Telah Dikirim
+								Form Survei Telah Dikirim. Anda masih dapat melakukan perubahan.
 							</Button>
 						)}
 					</VStack>
@@ -158,6 +158,7 @@ const DebiturCard = ({ formPengajuanData, onRefresh }) => {
 					</Heading>
 					<Text>{`${alamat}, RT/RW ${rt}/${rw}, ${kelurahan}, ${kecamatan}, ${kota} ${kode_pos}`}</Text>
 				</Box>
+        {formPengajuanData.status !== STATUS_SURVEI.selesai_survei && (
 				<TouchableOpacity>
 					<MaterialCommunityIcons
 						style={{ padding: 4, borderRadius: 8 }}
@@ -166,16 +167,17 @@ const DebiturCard = ({ formPengajuanData, onRefresh }) => {
 						onPress={onOpen}
 					/>
 				</TouchableOpacity>
+        )}
 			</HStack>
 			<Divider my='8px' />
 			{RenderButtons()}
-			<Actionsheet isOpen={isOpen} onClose={onClose}>
-				<Actionsheet.Content>
-					<Actionsheet.Item onPress={() => handleKirim()}>
-						Kirim
-					</Actionsheet.Item>
-				</Actionsheet.Content>
-			</Actionsheet>
+      <Actionsheet isOpen={isOpen} onClose={onClose}>
+        <Actionsheet.Content>
+          <Actionsheet.Item onPress={() => handleKirim()}>
+            Kirim
+          </Actionsheet.Item>
+        </Actionsheet.Content>
+      </Actionsheet>
 		</Box>
 	);
 };
