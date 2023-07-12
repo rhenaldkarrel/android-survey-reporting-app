@@ -110,7 +110,7 @@ export default function FormPermohonan({ route }) {
 		},
 		{
 			key: 'dataSPK',
-			title: 'Data SPK',
+			title: 'Data Penilaian',
 			formSpkId,
 		},
 	]);
