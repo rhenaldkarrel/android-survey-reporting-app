@@ -51,7 +51,7 @@ export default function Map({ navigation, route }) {
 						animated: true,
 					})
 				);
-        setIsMinimized(true);
+				setIsMinimized(true);
 			} catch (err) {
 				setMessage(err.message);
 			} finally {
@@ -60,37 +60,31 @@ export default function Map({ navigation, route }) {
 		})();
 	}, []);
 
-	React.useEffect(() => {
-		let interval;
-
-		if (!isEmpty(myLocation) && !isEmpty(koordinat_lokasi)) {
-			const baseLocation = {
-				latitude: myLocation?.latitude,
-				longitude: myLocation?.longitude,
-			};
-
-			const targetLocation = {
-				latitude: koordinat_lokasi?.latitude,
-				longitude: koordinat_lokasi?.longitude,
-			};
-
-			interval = setInterval(() => {
-				const haversineResult = haversineDistance(baseLocation, targetLocation);
-
-				setHaversineResult(haversineResult);
-			}, 1000);
-		}
-
-		return () => {
-			clearInterval(interval);
-		};
-	}, [myLocation, koordinat_lokasi]);
-
 	const openGoogleMapsNavigation = createOpenLink({
 		start: `${myLocation?.latitude}, ${myLocation?.longitude}`,
 		end: `${debiturLocation?.latitude}, ${debiturLocation?.longitude}`,
 		provider: 'google',
 	});
+
+	const onUserLocationChange = (e) => {
+		const nativeEvent = e.nativeEvent;
+
+		const { coordinate } = nativeEvent;
+
+		const baseLocation = {
+			latitude: coordinate.latitude,
+			longitude: coordinate.longitude,
+		};
+
+		const targetLocation = {
+			latitude: koordinat_lokasi?.latitude,
+			longitude: koordinat_lokasi?.longitude,
+		};
+
+		const haversineResult = haversineDistance(baseLocation, targetLocation);
+
+		setHaversineResult(haversineResult);
+	};
 
 	return (
 		<View style={styles.container}>
@@ -100,6 +94,7 @@ export default function Map({ navigation, route }) {
 				initialRegion={myLocation}
 				ref={map}
 				followsUserLocation={true}
+				onUserLocationChange={onUserLocationChange}
 			>
 				<Marker
 					coordinate={debiturLocation}
