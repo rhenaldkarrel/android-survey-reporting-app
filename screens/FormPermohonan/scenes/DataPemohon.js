@@ -265,6 +265,7 @@ export default function DataPemohon({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='numeric'
+                placeholder='0'
 							/>
 						)}
 						name='jumlah_tanggungan'

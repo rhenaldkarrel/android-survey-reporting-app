@@ -37,9 +37,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 			nominal_biaya_lainnya:
 				dataStrukturPembiayaan.nominal_biaya_lainnya?.toString(),
 			angsuran_bulanan: dataStrukturPembiayaan.angsuran_bulanan?.toString(),
-			jangka_waktu_pembiayaan: parseInt(
-				dataStrukturPembiayaan.jangka_waktu_pembiayaan
-			).toString(),
+			jangka_waktu_pembiayaan: dataStrukturPembiayaan.jangka_waktu_pembiayaan,
 			angsuran_pertama_dibayar: dataStrukturPembiayaan.angsuran_pertama_dibayar,
 			tanggal_jatuh_tempo: dataStrukturPembiayaan.tanggal_jatuh_tempo,
 			tanggal_mulai: dataStrukturPembiayaan.tanggal_mulai,
@@ -62,7 +60,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 			biaya_provinsi: Number(data.biaya_provinsi),
 			nominal_biaya_lainnya: Number(data.nominal_biaya_lainnya),
 			angsuran_bulanan: Number(data.angsuran_bulanan),
-			jangka_waktu_pembiayaan: data.jangka_waktu_pembiayaan + ' bulan',
+			jangka_waktu_pembiayaan: data.jangka_waktu_pembiayaan,
 		};
 
 		try {
@@ -98,6 +96,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -116,6 +115,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -134,6 +134,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -152,6 +153,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='4.5'
 								InputRightElement={<Text mr='8px'>% per thn</Text>}
 							/>
 						)}
@@ -190,6 +192,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -208,6 +211,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -250,6 +254,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -268,6 +273,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -285,8 +291,7 @@ export default function StrukturPembiayaan({ formPermohonanId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
-								keyboardType='number-pad'
-								InputRightElement={<Text mr='8px'>bulan</Text>}
+                placeholder='6 bulan'
 							/>
 						)}
 						name='jangka_waktu_pembiayaan'

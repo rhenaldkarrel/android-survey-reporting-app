@@ -217,6 +217,7 @@ export default function InformasiKendaraan({ formPermohonanId }) {
 								onBlur={onBlur}
 								onChangeText={(val) => onChange(val)}
 								value={value}
+                placeholder='B 1996 UKT'
 							/>
 						)}
 						name='no_polisi'

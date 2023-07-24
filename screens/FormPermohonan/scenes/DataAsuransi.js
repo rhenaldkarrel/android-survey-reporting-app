@@ -101,6 +101,7 @@ export default function DataAsuransi({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
@@ -139,6 +140,7 @@ export default function DataAsuransi({ formPermohonanId }) {
 								onChangeText={(val) => onChange(val)}
 								value={value}
 								keyboardType='number-pad'
+                placeholder='5000000'
 								InputLeftElement={<Text ml='8px'>Rp</Text>}
 							/>
 						)}
