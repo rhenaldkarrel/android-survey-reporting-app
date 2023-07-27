@@ -11,14 +11,18 @@ import useAuth from '../hooks/useAuth';
 import { StatusBar } from 'react-native';
 import { useStatistics } from '../api/statistik';
 import { useEffect, useState } from 'react';
-import { getCurrentMonthStartDate, getCurrentWeekStartDate, getCurrentYearStartDate } from '../lib/helpers/getTime';
+import {
+	getCurrentMonthStartDate,
+	getCurrentWeekStartDate,
+	getCurrentYearStartDate,
+} from '../lib/helpers/getTime';
 
 export default function Home({ navigation }) {
 	const { auth } = useAuth();
 
-	const { data, getKinerjaSurveyor } = useStatistics();
-  const [dataKinerja, setDataKinerja] = useState({});
-  const [filterKinerja, setFilterKinerja] = useState('');
+	const { data, getKinerjaSurveyor, getStatistik } = useStatistics();
+	const [dataKinerja, setDataKinerja] = useState({});
+	const [filterKinerja, setFilterKinerja] = useState('');
 
 	useEffect(() => {
 		(async () => {
@@ -28,17 +32,19 @@ export default function Home({ navigation }) {
 		})();
 	}, []);
 
-  const getKinerjaSurveyorByTimestamp = async (date) => {
-    const dataKinerja = await getKinerjaSurveyor(auth.userId, date);
+	const getKinerjaSurveyorByTimestamp = async (date) => {
+		const dataKinerja = await getKinerjaSurveyor(auth.userId, date);
 
-    setDataKinerja(dataKinerja);
-  };
+		setDataKinerja(dataKinerja);
+	};
 
-  const handleChangeFilterKinerja = async (val) => {
-    setFilterKinerja(val);
+	const handleChangeFilterKinerja = async (val) => {
+		setFilterKinerja(val);
 
-    await getKinerjaSurveyorByTimestamp(val)
-  }
+		await getKinerjaSurveyorByTimestamp(val);
+
+		await getStatistik(val);
+	};
 
 	return (
 		<ScrollView marginTop={StatusBar.currentHeight}>
@@ -54,22 +60,31 @@ export default function Home({ navigation }) {
 				borderTopLeftRadius='16px'
 				borderTopRightRadius='16px'
 			>
-				<HStack justifyContent="space-between" flex={1} alignItems="center">
+				<Select
+					placeholder='Filter'
+					selectedValue={filterKinerja}
+					onValueChange={(val) => handleChangeFilterKinerja(val)}
+					accessibilityLabel='Filter'
+					minWidth={120}
+				>
+					<Select.Item
+						label='Tahun ini'
+						value={getCurrentYearStartDate().toString()}
+					/>
+					<Select.Item
+						label='Bulan ini'
+						value={getCurrentMonthStartDate().toString()}
+					/>
+					<Select.Item
+						label='Minggu ini'
+						value={getCurrentWeekStartDate().toString()}
+					/>
+				</Select>
+				<Box>
 					<Heading fontSize='16px' fontWeight='medium'>
 						Kinerja Anda
 					</Heading>
-					<Select
-						placeholder='Filter'
-						selectedValue={filterKinerja}
-						onValueChange={(val) => handleChangeFilterKinerja(val)}
-						accessibilityLabel='Filter'
-            minWidth={120}
-					>
-						<Select.Item label='Tahun ini' value={getCurrentYearStartDate().toString()} />
-						<Select.Item label='Bulan ini' value={getCurrentMonthStartDate().toString()} />
-						<Select.Item label='Minggu ini' value={getCurrentWeekStartDate().toString()} />
-					</Select>
-				</HStack>
+				</Box>
 				<VStack space='8px'>
 					<HStack space='8px' display='flex'>
 						<Box bg='primaryShade.800' p='6px' flex={1} borderRadius='8px'>
