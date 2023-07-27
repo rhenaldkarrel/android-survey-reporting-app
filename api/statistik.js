@@ -6,19 +6,31 @@ export const useStatistics = () => {
 	const [data, setData] = useState({});
 	const axios = useAxiosPrivate();
 
-	useEffect(() => {
-		(async () => {
-			try {
-				const res = await axios.get('/surveyor/statistik');
+  const getStatistik = async (date = '') => {
+    try {
+      let params = {};
 
-				setData(res.data.data);
-			} catch (err) {
-				ToastAndroid.show(
-					err.response?.data?.message || err.message || err,
-					ToastAndroid.SHORT
-				);
+			if (date) {
+				params = {
+					startDate: date,
+				};
 			}
-		})();
+
+      const res = await axios.get('/surveyor/statistik', {
+        params,
+      });
+
+      setData(res.data.data);
+    } catch (err) {
+      ToastAndroid.show(
+        err.response?.data?.message || err.message || err,
+        ToastAndroid.SHORT
+      );
+    }
+  };
+
+	useEffect(() => {
+		getStatistik();
 	}, []);
 
 	const getKinerjaSurveyor = async (surveyorId, date = '') => {
@@ -44,5 +56,5 @@ export const useStatistics = () => {
 		}
 	};
 
-	return { data, getKinerjaSurveyor };
+	return { data, getKinerjaSurveyor, getStatistik };
 };
